@@ -48,13 +48,13 @@ function getAuditionList(){
           var data = xhr.responseText;
           console.log(response)
           auditionList = data
-            var displayedAuditions = auditionList
-            console.log(displayedAuditions)
-            localStorage.setItem("displayedAuditions",JSON.stringify(displayedAuditions))
-            var table = displayTable(displayedAuditions)
-            $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
-            $("#loadingBox").hide()
-            return data
+          var displayedAuditions = auditionList
+          console.log(displayedAuditions)
+          localStorage.setItem("displayedAuditions",JSON.stringify(displayedAuditions))
+          var table = displayTable(displayedAuditions)
+          $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
+          $("#loadingBox").hide()
+          return data
       }else {
           console.log( "cevap gelmedi")
       }
