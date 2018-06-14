@@ -94,7 +94,7 @@ let scrape = async () => {
 app.use(express.static('home'))
 
 
-app.get("/scrape",(req,res)=> {
+app.get("/",(req,res)=> {
 
     scrape().then((value) => {
         res.send(JSON.stringify(value));
@@ -102,4 +102,4 @@ app.get("/scrape",(req,res)=> {
     })
 }); 
 app.listen(port, () => console.log('Example app listening on port' + port))
-app.listen("/scrape",() => console.log('Listening for scrape request'))
+// app.listen("/scrape",() => console.log('Listening for scrape request'))
