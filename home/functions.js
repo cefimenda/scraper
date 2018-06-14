@@ -46,7 +46,6 @@ function getAuditionList(){
   xhr.onload = function(){
       if(xhr.status == 200){
           var data = xhr.responseText;
-          console.log(response)
           auditionList = data
           var displayedAuditions = auditionList
           console.log(displayedAuditions)
