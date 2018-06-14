@@ -90,19 +90,15 @@ let scrape = async () => {
     return result;
 };
 
-// app.use(express.static('home'))
+app.use(express.static('home'))
 
-app.get("/",(req,res)=> {
-    //we used .sendFile to use a separate html file in the localport. __dirname gets current working directory that the app.js is running from
-    res.sendFile(__dirname + "/home/");
-
-});
 
 app.get("/scrape",(req,res)=> {
 
     scrape().then((value) => {
         res.send(JSON.stringify(value));
         res.end();
-    });
+    })
 });
 
+app.listen("/", () => console.log('Example app listening on port 3000!'))
