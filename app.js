@@ -101,4 +101,4 @@ app.get("/scrape",(req,res)=> {
     })
 });
 
-app.listen("/", () => console.log('Example app listening on port 3000!'))
+app.listen("/scrape", () => console.log('Example app listening on port 3000!'))
