@@ -57,6 +57,8 @@ function getAuditionList(){
           return data
       }else {
           console.log( "cevap gelmedi")
+          alert("Server Unresponsive")
+          $("#loadingBox").hide()
       }
   }
 
