@@ -40,7 +40,7 @@ function changeLoadingText(){
 //Functions for Scraping PlayBill
 
 function getAuditionList(){
-  $.getJSON("/scrape", function(data){
+  $.getJSON("/", function(data){
     auditionList = data
     var displayedAuditions = auditionList
     console.log(displayedAuditions)
