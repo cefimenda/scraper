@@ -2,17 +2,9 @@
 
 $(function(){
 
-  
-  scrape().then((value) => {
-    console.log(value); // Success!
-    auditionsList = value
-    
-});
-  console.log('we here')
   localStorage.setItem("keywordIndex",0)
   //auditionList = getPlayBillAuditions()
   var displayedAuditions = auditionList
-  localStorage.setItem("displayedAuditions",JSON.stringify(displayedAuditions))
   var table = displayTable(displayedAuditions)
   $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
   $("#filterButton").click(function(){
@@ -22,25 +14,44 @@ $(function(){
     $("#filterBox").hide()
   });
   $("#refreshButton").click(function(){
-    var auditionList = getPlayBillAuditions()
-    var table = displayTable(auditionList)
-    $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
+    $("#refreshButton").html("Refresh Table")
+    $("#loadingBox").show()
+    console.log($("#loadingBox").css("display"))
+    getAuditionList()
   });
 });
+
+function loadingAnimation(){
+  if ($("#loadingBox").css('display') != 'none'){
+    setTimeout(changeLoadingText,500)
+  }
+}
+function changeLoadingText(){
+  console.log('changing text')
+  var currentContent = $("#loadingText").html()
+  if (currentContent == "Loading..."){
+    $("#loadingText").html("Loading")
+  }else{
+    $("#loadingText").html(currentContent+".")
+  }
+  loadingAnimation()
+}
 
 //Functions for Scraping PlayBill
 
 function getAuditionList(){
-  //The Request
-  var xhr = newXMLHttpRequest();
-  xhr.open('GET','myApp/app.js',true)
-  xhr.send()
-  //The Response
-  xhr.onload = function(){
-    if(xhr.status===200){
-      //code to process the results from the server
-    }
-  }
+  $.getJSON("/scrape", function(data){
+    auditionList = data
+    var displayedAuditions = auditionList
+    console.log(displayedAuditions)
+    localStorage.setItem("displayedAuditions",JSON.stringify(displayedAuditions))
+    var table = displayTable(displayedAuditions)
+    $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
+    $("#loadingBox").hide()
+    return data
+  });
+  console.log('Animation should start now')
+  loadingAnimation()
 }
 
 function getPlayBillAuditions(){

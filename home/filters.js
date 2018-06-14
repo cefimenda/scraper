@@ -1,20 +1,20 @@
 
 function listSelector(){ //this will become a way to seperate "AND" filters from "OR" filter --> "AND" filter uses filteredList, "OR" filter uses auditionList
   if (filteredList.isEmpty){
-    return auditionList
+      return auditionList
   }else return filteredList
 }
 
 function objectTransfer(origin, target){
-  //for OR Filter
-  /*
-  for (item in origin){
-    target[item] = origin[item]
-  }*/
-  //for AND Filter
+//for OR Filter
+/*
+for (item in origin){
+  target[item] = origin[item]
+}*/
+//for AND Filter
   target = {}
   for (item in origin){
-    target[item] = origin[item]
+      target[item] = origin[item]
   }
   filteredList = target
   return filteredList
@@ -48,11 +48,12 @@ function activateFilter(){
     $("#loadingBox").show()
     $("#filterBox").hide()
     for (var auditionNumber in listSelector()){
-      var audition = auditionList[auditionNumber]
-      runAsyncFilters(audition,listSelector(),collector)
+        var audition = auditionList[auditionNumber]
+        runAsyncFilters(audition,listSelector(),collector)
     }
   }
 }
+
 function isAsyncNecessary(){
   var descriptionInput = $("#descriptionFilterInput").val().toLowerCase()
   var keywordInput = $("#keywordFilterInput1").val()
@@ -79,7 +80,7 @@ function runAsyncFilters(audition,filteredList,collector){
   });
 }
 function removeLoadingBox(){
-  $("#loadingBox").hide()
+$("#loadingBox").hide()
 }
 
 function displayFilteredTable(filteredList){
@@ -211,7 +212,7 @@ function addKeyword(){
   <button class = action type = "button" id = "displayFilteredTableButton" onclick = "displayFilteredTable()">Display Table</button>
   <button class = action type = "button" id = "addKeywordButton" onclick="addKeyword()">Add Keyword to Filter</button>
   <button class = action type = "button" id = "removeKeywordButton" onclick="removeKeyword()">Remove Last Keyword</button>
-`
+  `
   var newContent = `<label for = "filterField" class = "filterLabel">Filter Keyword </label><input class = "filterInput" id = "keywordFilterInput`+i+`"></input>`
   $(".filterInputContainer").html(currentContent.split("<button")[0]+newContent+endingHTML)
   console.log()
@@ -225,7 +226,7 @@ function removeKeyword(){
   <button class = action type = "button" id = "displayFilteredTableButton" onclick = "displayFilteredTable()">Display Table</button>
   <button class = action type = "button" id = "addKeywordButton" onclick="addKeyword()">Add Keyword to Filter</button>
   <button class = action type = "button" id = "removeKeywordButton" onclick="removeKeyword()">Remove Last Keyword</button>
-`
+  `
   var keywordRemovedHTML = currentContent.split(`<label for="filterField" class="filterLabel">Filter Keyword </label><input class="filterInput" id="keywordFilterInput`+i+`">`)[0]
   if (keywordRemovedHTML == currentContent){
     alert("No Keyword to Remove")
