@@ -101,5 +101,5 @@ app.get("/scrape",(req,res)=> {
         res.end();
     })
 }); 
-
 app.listen(port, () => console.log('Example app listening on port' + port))
+app.listen("/scrape",() => console.log('Listening for scrape request'))
