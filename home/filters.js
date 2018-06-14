@@ -85,6 +85,7 @@ $("#loadingBox").hide()
 
 function displayFilteredTable(filteredList){
   if (filteredList.isEmpty){
+    console.log(filteredList)
     var table = displayTable(auditionList)
     $(".auditionCount").html("Number of Filtered Auditions: "+String(((table.rows).length)-1))
 
