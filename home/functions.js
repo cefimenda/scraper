@@ -40,16 +40,36 @@ function changeLoadingText(){
 //Functions for Scraping PlayBill
 
 function getAuditionList(){
-  $.getJSON("/", function(data){
-    auditionList = data
-    var displayedAuditions = auditionList
-    console.log(displayedAuditions)
-    localStorage.setItem("displayedAuditions",JSON.stringify(displayedAuditions))
-    var table = displayTable(displayedAuditions)
-    $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
-    $("#loadingBox").hide()
-    return data
-  });
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET','/scrape',true)
+  xhr.send(null)
+  xhr.onload = function(){
+      if(xhr.status == 200){
+          var data = xhr.responseText;
+          console.log(response)
+          auditionList = data
+            var displayedAuditions = auditionList
+            console.log(displayedAuditions)
+            localStorage.setItem("displayedAuditions",JSON.stringify(displayedAuditions))
+            var table = displayTable(displayedAuditions)
+            $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
+            $("#loadingBox").hide()
+            return data
+      }else {
+          console.log( "cevap gelmedi")
+      }
+  }
+
+  // $.getJSON("/", function(data){
+  //   auditionList = data
+  //   var displayedAuditions = auditionList
+  //   console.log(displayedAuditions)
+  //   localStorage.setItem("displayedAuditions",JSON.stringify(displayedAuditions))
+  //   var table = displayTable(displayedAuditions)
+  //   $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
+  //   $("#loadingBox").hide()
+  //   return data
+  // });
   console.log('Animation should start now')
   loadingAnimation()
 }

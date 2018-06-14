@@ -94,8 +94,7 @@ let scrape = async () => {
 app.use(express.static('home'))
 
 
-app.get("/",(req,res)=> {
-
+app.get("/scrape",(req,res)=> {
     scrape().then((value) => {
         res.send(JSON.stringify(value));
         res.end();
