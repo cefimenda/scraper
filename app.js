@@ -1,6 +1,7 @@
 
 var express = require("express");
 var app = express();
+var port = process.env.PORT || 8080;
 
 let scrape = async () => {
     const browser = await puppeteer.launch({headless: false}); //opens browser - headless false --> displays action on screen
@@ -99,6 +100,6 @@ app.get("/scrape",(req,res)=> {
         res.send(JSON.stringify(value));
         res.end();
     })
-});
+}); 
 
-app.listen("/scrape", () => console.log('Example app listening on port 3000!'))
+app.listen(port, () => console.log('Example app listening on port' + port))
