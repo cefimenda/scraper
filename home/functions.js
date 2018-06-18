@@ -15,9 +15,17 @@ $(function(){
   });
   $("#refreshButton").click(function(){
     $("#refreshButton").html("Refresh Table")
+    $(".jumbotronRow").hide()
     $("#loadingBox").show()
     console.log($("#loadingBox").css("display"))
     getAuditionList()
+  });
+  
+  $('.table > tbody > tr').click(function() {
+    console.log($(this))
+    var href = $(this).children(".hiddenLink").last().val()
+    console.log(href)
+    window.open(href)
   });
 });
 
@@ -53,9 +61,10 @@ function getAuditionList(){
           var table = displayTable(displayedAuditions)
           $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
           $("#loadingBox").hide()
+          $(".auditionTableContainer").show()
           return data
       }else {
-          console.log( "cevap gelmedi")
+          console.log("cevap gelmedi")
           alert("Server Unresponsive")
           $("#loadingBox").hide()
       }
@@ -119,18 +128,14 @@ function displayTable(auditionList){
   return table
 }
 function resetTable(){
-  $("#auditionsTable").html(`    <tr>
-        <th><strong>Title</strong></th>
-        <th><strong>Category</strong></th>
-        <th><strong>Organization</strong></th>
-        <th><strong>State</strong></th>
-        <th><strong>Paid?</strong></th>
-        <th><strong>Date Posted</strong></th>
-        <th><strong>Link</strong></th>
-      </tr>`)
+
+  var tbody = $("#auditionsTable").children().first().next();
+  tbody.remove();
+  $("#auditionsTable").append("<tbody></tbody>")
+  console.log($("#auditionsTable").html())
 }
 function addToTable(auditionList){
-  var currentContent = $("#auditionsTable").html()
+  var tbody = $("#auditionsTable").children().first().next()
   for(i in auditionList){
     var audition = auditionList[i]
     var title = audition.title
@@ -140,9 +145,10 @@ function addToTable(auditionList){
     var paid = audition.paid
     var date = audition.date
     var link = audition.link
-    $("#auditionsTable").html(currentContent + "<tr><td>"+ title +"</td><td>"+category+"</td><td>"+organization+"</td><td>"+state+"</td><td>"+paid+"</td><td>"+date+"</td><td><button class = action type = 'Button' id = 'backButton' onclick = openPage(" + JSON.stringify(link) + ")> Go To Page </button></td><td class = 'hiddenLink'>http://www.playbill.com" + audition[6] + "</td></tr>")
-    currentContent = $("#auditionsTable").html()
-  }
+    var fullLink =  'http://www.playbill.com'+link
+    tbody.append("<tr><td><a href="+fullLink+" target = '_blank' class = 'tableLink text-dark'>"+ title +"</a></td><td>"+category+"</td><td>"+organization+"</td><td>"+state+"</td><td>"+paid+"</td><td>"+date+"</td><td class = 'hiddenLink'><button class = action type = 'Button' id = 'backButton' onclick = openPage(" + JSON.stringify(link) + ")> Go To Page </button></td><td class = 'hiddenLink'>http://www.playbill.com" + link + "</td></tr>")
+    console.log("adding to table")
+  }console.log('added to table')
 }
 
 function openPage(link){

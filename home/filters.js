@@ -39,29 +39,32 @@ function activateFilter(){
   andFilter = {}
   andFilter['isEmpty'] = false
   filterPaid(listSelector(),andFilter)
-
+  console.log(filteredList)
+  console.log(auditionList)
 
   //async filters
-  if (isAsyncNecessary()){
-    var collector = {}
-    collector['isEmpty'] = false
-    $("#loadingBox").show()
-    $("#filterBox").hide()
-    for (var auditionNumber in listSelector()){
-        var audition = auditionList[auditionNumber]
-        runAsyncFilters(audition,listSelector(),collector)
-    }
-  }
+  // if (isAsyncNecessary()){
+  //   var collector = {}
+  //   collector['isEmpty'] = false
+  //   $("#loadingBox").show()
+  //   $("#filterBox").hide()
+  //   for (var auditionNumber in listSelector()){
+  //       var audition = auditionList[auditionNumber]
+  //       runAsyncFilters(audition,listSelector(),collector)
+  //   }
+  // }
 }
 
 function isAsyncNecessary(){
-  var descriptionInput = $("#descriptionFilterInput").val().toLowerCase()
-  var keywordInput = $("#keywordFilterInput1").val()
+  if ($("#descriptionFilterInput").val()!= undefined && ("#keywordFilterInput1").val() != undefined ){
+    var descriptionInput = $("#descriptionFilterInput").val().toLowerCase()
+    var keywordInput = $("#keywordFilterInput1").val()
 
-  if (keywordInput != undefined || descriptionInput != ""){
-    return true
-  }
-  else return false
+    if (keywordInput != "" || descriptionInput != ""){
+      return true
+    }
+    else return false
+  } else return false
 }
 function runAsyncFilters(audition,filteredList,collector){
   var link = "http://www.playbill.com"+audition.link
@@ -84,12 +87,14 @@ $("#loadingBox").hide()
 }
 
 function displayFilteredTable(filteredList){
+  console.log('we here')
   if (filteredList.isEmpty){
     console.log(filteredList)
     var table = displayTable(auditionList)
     $(".auditionCount").html("Number of Filtered Auditions: "+String(((table.rows).length)-1))
-
   }else{
+    console.log(auditionList)
+    console.log(filteredList)
     var table = displayTable(filteredList)
     $(".auditionCount").html("Number of Filtered Auditions: "+String(((table.rows).length)-2))
     $("#rowNumber1").hide() // hides the row that was created due to filteredList.isEmpty = 'false'
