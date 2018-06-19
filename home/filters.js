@@ -53,6 +53,10 @@ function activateFilter(){
   //       runAsyncFilters(audition,listSelector(),collector)
   //   }
   // }
+  console.log("gotta make sure to show dem dings")
+  $("#auditionsTable").show()
+  $(".warningMessage").hide()
+  console.log("I wonder if its empty...")
   displayFilteredTable(filteredList)
   clickMinimize()
 }
@@ -89,14 +93,15 @@ $("#loadingBox").hide()
 }
 
 function displayFilteredTable(filteredList){
-  console.log('we here')
   if (filteredList.isEmpty){
-    console.log(filteredList)
     var table = displayTable(auditionList)
     $(".auditionCount").html(String(((table.rows).length)-1)+" Auditions Listed")
-  }else{
-    console.log(auditionList)
-    console.log(filteredList)
+  } else if (Object.keys(filteredList).length < 2){
+    console.log("I guess it is, lemme close them dings")
+    $("#auditionsTable").hide()
+    $(".warningMessage").show()
+    console.log("dem dingies b closed")
+  } else {
     var table = displayTable(filteredList)
     $(".auditionCount").html(String(((table.rows).length)-2)+" Auditions Listed")
     $("#rowNumber1").hide() // hides the row that was created due to filteredList.isEmpty = 'false'

@@ -44,7 +44,7 @@ function clickMinimize(){
   $('.no-mini').addClass('d-none')
   $(".filterBar").css({
     "position": "fixed"
-  });w
+  });
 }
 function clickExpand(){
   $(".filterBar").removeClass("col-sm-2");
