@@ -33,3 +33,6 @@ label:first-child{
 .checkboxes{
     float:left
 }
+.form-group{
+    margin-bottom: .25rem!important;
+}
