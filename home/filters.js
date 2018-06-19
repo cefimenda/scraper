@@ -54,6 +54,7 @@ function activateFilter(){
   //   }
   // }
   displayFilteredTable(filteredList)
+  clickMinimize()
 }
 
 function isAsyncNecessary(){

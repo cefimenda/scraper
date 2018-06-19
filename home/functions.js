@@ -27,23 +27,36 @@ $(function(){
     window.open(href)
   });
   $('#expandFilters').click(function(){
-    $(".filterBar").removeClass("col-sm-2")
-    $(".filterBar").addClass("col-sm-10")
-    $(".tableColumn").hide()
-    $("#expandFilters").hide()
-    $('#minimize').show()
-    $('.no-mini').removeClass('d-none');
+    clickExpand()
   });
   $("#minimize").click(function(){
-    $(".filterBar").removeClass("col-sm-10")
-    $(".filterBar").addClass("col-sm-2")
-    $(".tableColumn").show()
-    $("#expandFilters").show()
-    $('#minimize').hide()
-    $('.no-mini').addClass('d-none')
-
+    clickMinimize()
   })
 });
+
+function clickMinimize(){
+  $(".filterBar").removeClass("col-sm-12")
+  $(".filterBar").addClass("col-sm-2")
+  $(".tableColumn").show()
+  $("#expandFilters").show()
+  $('#minimize').hide()
+  $('.no-mini').addClass('d-none')
+  $(".filterBar").css({
+    "position": "fixed"
+  });
+}
+function clickExpand(){
+  $(".filterBar").removeClass("col-sm-2");
+  $(".filterBar").addClass("col-sm-12");
+  $(".filterBar").css({
+    "position": "static"
+  });
+  $(".tableColumn").hide();
+  $("#expandFilters").hide();
+  $('#minimize').show();
+  $('.no-mini').removeClass('d-none');
+
+}
 
 function loadingAnimation(){
   
