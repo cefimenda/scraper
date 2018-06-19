@@ -6,7 +6,7 @@ $(function(){
   //auditionList = getPlayBillAuditions()
   var displayedAuditions = auditionList
   var table = displayTable(displayedAuditions)
-  $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
+  $(".auditionCount").html(String(((table.rows).length)-1)+" Auditions Listed")
   $("#filterButton").click(function(){
     $("#filterBox").show()
   });
@@ -20,18 +20,43 @@ $(function(){
     console.log($("#loadingBox").css("display"))
     getAuditionList()
   });
-  
   $('.table > tbody > tr').click(function() {
     console.log($(this))
     var href = $(this).children(".hiddenLink").last().val()
     console.log(href)
     window.open(href)
   });
+  $('#expandFilters').click(function(){
+    $(".filterBar").removeClass("col-sm-2")
+    $(".filterBar").addClass("col-sm-10")
+    $(".tableColumn").hide()
+    $("#expandFilters").hide()
+    $('#minimize').show()
+    $('.no-mini').removeClass('d-none');
+  });
+  $("#minimize").click(function(){
+    $(".filterBar").removeClass("col-sm-10")
+    $(".filterBar").addClass("col-sm-2")
+    $(".tableColumn").show()
+    $("#expandFilters").show()
+    $('#minimize').hide()
+    $('.no-mini').addClass('d-none')
+
+  })
 });
 
 function loadingAnimation(){
+  
   if ($("#loadingBox").css('display') != 'none'){
     setTimeout(changeLoadingText,500)
+    var currentValue = $(".progress-bar").attr("aria-valuenow");
+    console.log(currentValue)
+    $(".progress-bar").attr({
+      "aria-valuenow" : String(Number(currentValue)+30),
+    });
+    $(".progress-bar").css({
+      "width" : String(Number(currentValue)+30),
+    });
   }
 }
 function changeLoadingText(){
@@ -59,9 +84,15 @@ function getAuditionList(){
           console.log(displayedAuditions)
           localStorage.setItem("displayedAuditions",JSON.stringify(displayedAuditions))
           var table = displayTable(displayedAuditions)
-          $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
+          $(".auditionCount").html(String(((table.rows).length)-1)+ " Auditions Listed")
           $("#loadingBox").hide()
           $(".auditionTableContainer").show()
+          $(".progress-bar").attr({
+            "aria-valuenow" : "100"
+          });
+          $(".progress-bar").css({
+            "width" : "100%"
+          });
           return data
       }else {
           console.log("cevap gelmedi")

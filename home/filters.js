@@ -53,6 +53,7 @@ function activateFilter(){
   //       runAsyncFilters(audition,listSelector(),collector)
   //   }
   // }
+  displayFilteredTable(filteredList)
 }
 
 function isAsyncNecessary(){
@@ -91,12 +92,12 @@ function displayFilteredTable(filteredList){
   if (filteredList.isEmpty){
     console.log(filteredList)
     var table = displayTable(auditionList)
-    $(".auditionCount").html("Number of Filtered Auditions: "+String(((table.rows).length)-1))
+    $(".auditionCount").html(String(((table.rows).length)-1)+" Auditions Listed")
   }else{
     console.log(auditionList)
     console.log(filteredList)
     var table = displayTable(filteredList)
-    $(".auditionCount").html("Number of Filtered Auditions: "+String(((table.rows).length)-2))
+    $(".auditionCount").html(String(((table.rows).length)-2)+" Auditions Listed")
     $("#rowNumber1").hide() // hides the row that was created due to filteredList.isEmpty = 'false'
   }
   $("#filterBox").hide()
@@ -124,7 +125,7 @@ function filterTitle(auditionList, condition,andFilter){
 
 function filterCategory(auditionList,andFilter){
   var checkedList = []
-  var optionsList = ['Performer','Technical','Other','Administrative','Editorial/Writing','Directorial','Design','Internship','Classes','Non-Theatrical']
+  var optionsList = ['Performer','Technical','Other','Administrative','Editorial/Writing','Directorial','Design','Internship','Classes','Non-Theatrical','Academic/Instructor','Coaching','Musician','Festival/Competition Submissions']
   var index = 1
   $.each(optionsList,function(){
     if ($("input[id = checkbox"+index+"]").prop('checked') == true){

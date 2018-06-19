@@ -51,6 +51,9 @@
     .tableLink{
         text-decoration: none;
     }
+    .checkboxes{
+        float:left
+    }
 </style>
 </head>
 <body>
@@ -89,13 +92,16 @@
             <div class="col-md-12">
                 <div class="jumbotron">
                     <h1 class="display-4" id = "loadingText">Loading...</h1>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- table+filters -->
         <div class="row auditionTableContainer">
             <!-- table -->
-            <div class="col col-sm-10">
+            <div class="col col-sm-10 tableColumn">
                 <table class="table table-striped table-hover table-responsive auditionsTable" id = "auditionsTable">
                     <thead class = "bg-primary text-light">
                         <tr>
@@ -149,25 +155,75 @@
                     <div class = "form-group">
                         <label for="categoryFilterInput">Category:</label>
                     </div>
-                    <div class="form-group form-check">
-                        <div class="form-group">
-                            <input type="checkbox" class="form-check-input" id="checkbox1">
-                            <label class="form-check-label" id = "checkboxLabel1" for="checkbox1">Performer</label>
+                    <div class = "form-check-container d-inline">
+                        <div class="form-group form-check col-sm-3 checkboxes">
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox1">
+                                <label class="form-check-label" id = "checkboxLabel1" for="checkbox1">Performer</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox2">
+                                <label class="form-check-label" id = "checkboxLabel2" for="checkbox2">Technical</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox3">
+                                <label class="form-check-label" id = "checkboxLabel3" for="checkbox3">Internship</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox4">
+                                <label class="form-check-label" id = "checkboxLabel4" for="checkbox4">Administrative</label>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="checkbox" class="form-check-input" id="checkbox2">
-                            <label class="form-check-label" id = "checkboxLabel2" for="checkbox2">Technical</label>
+                        <div class="form-group form-check col-sm-3 d-none checkboxes no-mini">
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox5">
+                                <label class="form-check-label" id = "checkboxLabel5" for="checkbox5">Editorial/Writing</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox6">
+                                <label class="form-check-label" id = "checkboxLabel6" for="checkbox6">Directorial</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox7">
+                                <label class="form-check-label" id = "checkboxLabel7" for="checkbox7">Design</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox8">
+                                <label class="form-check-label" id = "checkboxLabel8" for="checkbox8">Classes</label>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="checkbox" class="form-check-input" id="checkbox3">
-                            <label class="form-check-label" id = "checkboxLabel3" for="checkbox3">Internship</label>
+                        <div class="form-group form-check col-sm-3 d-none checkboxes no-mini">
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox9">
+                                <label class="form-check-label" id = "checkboxLabel9" for="checkbox9">Non-Theatrical</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox10">
+                                <label class="form-check-label" id = "checkboxLabel10" for="checkbox10">Academic/Instructor</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox11">
+                                <label class="form-check-label" id = "checkboxLabel11" for="checkbox11">Coaching</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox12">
+                                <label class="form-check-label" id = "checkboxLabel12" for="checkbox12">Musician</label>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="checkbox" class="form-check-input" id="checkbox4">
-                            <label class="form-check-label" id = "checkboxLabel4" for="checkbox4">Administrative</label>
+                        <div class="form-group form-check col-sm-3 d-none checkboxes no-mini">
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox13">
+                                <label class="form-check-label" id = "checkboxLabel13" for="checkbox13">Festival/Competition Submissions</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="checkbox14">
+                                <label class="form-check-label" id = "checkboxLabel14" for="checkbox14">Other</label>
+                            </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-warning btn-block">More Categories</button>
+                    <button type="button" class="btn btn-warning btn-block" id = "expandFilters">More Categories</button>
+                    <button type="button" class="btn btn-warning btn-block" id = "minimize" style = "display:none">Show Less</button>
+
                     <div class="form-group">
                         <label for="stateFilterInput">State:</label>
                         <input type="text" class="form-control" id="stateFilterInput" aria-describedby="State" placeholder="Enter State (i.e. NY, LA etc.)">
@@ -181,7 +237,7 @@
                         </select>
                     </div>
                     <button type="button" id = "submitButton" onclick="activateFilter()" class="btn btn-primary btn-block">Activate Filter</button>
-                    <button type="button" id = "displayFilteredTableButton" onclick="displayFilteredTable(filteredList)" class="btn btn-secondary btn-block">Display Table</button>
+                    <!-- <button type="button" id = "displayFilteredTableButton" onclick="displayFilteredTable(filteredList)" class="btn btn-secondary btn-block">Display Table</button> -->
                 </form>
             </div>
         </div>
