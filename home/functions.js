@@ -17,6 +17,7 @@ $(function(){
     $("#refreshButton").html("Refresh Table")
     $(".jumbotronRow").hide()
     $("#loadingBox").show()
+    $(".auditionTableContainer").hide()
     console.log($("#loadingBox").css("display"))
     getAuditionList()
   });
