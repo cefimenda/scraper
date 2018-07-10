@@ -3,23 +3,25 @@ label:first-child{
     font-weight: bold;
 }
 .auditionTableContainer{
-    display:none;
+    display:block;
 }
-#loadingBox{
+/* #loadingBox{
     display:none;
-}
+} */
 .hiddenLink{
     display: none;
 }
 .filterBar{
     position: fixed;
-    top: 70px;
-    right: 40px;
+    left: 20px;
     box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.2);
     padding-top: 20px;
     padding-bottom: 20px;
     overflow-y:scroll;
     opacity: 1;
+}
+.auditionsBody{
+    left:42%;
 }
 .auditionsTable{
     box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.2);
@@ -35,4 +37,7 @@ label:first-child{
 }
 .form-group{
     margin-bottom: .25rem!important;
+}
+a{
+    color: black;
 }

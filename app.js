@@ -5,13 +5,19 @@ var port = process.env.PORT || 8080;
 
 
 var playbill = require("./playbill.js")
-// var backstage = require("./backstage.js")
+var backstage = require("./backstage.js")
 
 app.use(express.static('home'))
 
 
-app.get("/scrape",(req,res)=> {
+app.get("/playbill",(req,res)=> {
     playbill.scrape().then((value) => {
+        res.send(JSON.stringify(value));
+        res.end();
+    })  
+}); 
+app.get("/backstage",(req,res)=> {
+    backstage.scrape().then((value) => {
         res.send(JSON.stringify(value));
         res.end();
     })  

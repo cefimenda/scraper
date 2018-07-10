@@ -1,4 +1,124 @@
 
+
+var filter={
+  list:[],
+  run: function(){
+    // filter.title();
+    // filter.category();
+    for (var i in allAuditions.list){
+      var audition = allAuditions.list[i]
+      if (checkTitle(audition,input.title()) && checkCategory(audition,input.category()) && checkState(audition,input.state()) && checkPaid(audition,input.paid())){
+        filter.list.push(audition)
+      }
+    }
+    filter.display()
+  },
+  hasNoResult: function(){
+    if (filter.list.length==0){
+      alert("There are no results that match your criteria. Please use a different filter and try again.")
+      return true
+    };
+  },
+  title:function(){
+    if (input.title() == ""){return}
+    for(var i in screen.list){
+      var audition = screen.list[i];
+      if (contains(audition.title,input.title())){
+        filter.list.push(audition);
+      };
+    };
+    filter.display()
+  },
+  category: function(){
+    var thisCount = 0;
+    var catInputList = input.category()
+    if(catInputList.length == 0){return}
+    for(var i in screen.list){
+      var audition = screen.list[i];
+      for(var n in catInputList){
+        if(contains(audition.category,catInputList[n])){
+          filter.list.push(audition)
+        };
+      };
+    };
+    filter.display()
+  },
+  display: function(){
+    if (filter.hasNoResult()){
+      screen.list = allAuditions.list;
+      screen.display();
+    }else{
+      screen.list = filter.list;
+      screen.display();
+      filter.list = [];
+    }
+  }
+};
+//object that gets user inputs in different sections of the filterbar
+var input ={
+  title:function(){ //returns the input in title input
+    return $("#titleFilterInput").val().toLowerCase();
+  },
+  category:function(){ //returns list of checked categories
+    var checkedList = $("input:checked").next();
+    var catList = [];
+    for (var i = 0; i<checkedList.length;i++){
+      catList.push(checkedList[i].innerText.toLowerCase());
+    }
+    return catList
+  },
+  state: function(){
+    return $("#stateFilterInput").val().toLowerCase();
+  },
+  paid: function(){
+    return $('#isAuditionPaid').find(":selected").text().toLowerCase()
+  }
+}
+
+function checkTitle(audition,condition){
+  if (condition ==""){return true}
+  if (contains(audition.title,condition)){
+    return true;
+  };
+}
+function checkCategory(audition,condition){
+  if (condition.length == 0){return true}
+  for(var n in condition){
+    if(contains(audition.category,condition[n])){
+      return true;
+    };
+  };
+}
+function checkState(audition,condition){
+  if (condition ==""){return true}
+  if(contains(audition.state,"nationwide")){return true}
+  if (contains(audition.state,condition)){
+    return true;
+  };
+}
+function checkPaid(audition,condition){
+  if (condition =="either"){return true};
+  if(audition.paid.toLowerCase()===condition){
+    return true;
+  }
+}
+function contains(target,condition){
+  if (target.toLowerCase().search(condition)>-1){
+    return true
+  }else{return false}
+}
+
+
+$(function(){
+  $("#submitButton").on("click",function(){
+    filter.run()
+  });
+})
+
+
+
+
+
 function listSelector(){ //this will become a way to seperate "AND" filters from "OR" filter --> "AND" filter uses filteredList, "OR" filter uses auditionList
   if (filteredList.isEmpty){
       return auditionList
@@ -39,8 +159,7 @@ function activateFilter(){
   andFilter = {}
   andFilter['isEmpty'] = false
   filterPaid(listSelector(),andFilter)
-  console.log(filteredList)
-  console.log(auditionList)
+
 
   //async filters
   // if (isAsyncNecessary()){
@@ -53,10 +172,8 @@ function activateFilter(){
   //       runAsyncFilters(audition,listSelector(),collector)
   //   }
   // }
-  console.log("gotta make sure to show dem dings")
   $("#auditionsTable").show()
   $(".warningMessage").hide()
-  console.log("I wonder if its empty...")
   displayFilteredTable(filteredList)
   clickMinimize()
 }
@@ -97,10 +214,8 @@ function displayFilteredTable(filteredList){
     var table = displayTable(auditionList)
     $(".auditionCount").html(String(((table.rows).length)-1)+" Auditions Listed")
   } else if (Object.keys(filteredList).length < 2){
-    console.log("I guess it is, lemme close them dings")
     $("#auditionsTable").hide()
     $(".warningMessage").show()
-    console.log("dem dingies b closed")
   } else {
     var table = displayTable(filteredList)
     $(".auditionCount").html(String(((table.rows).length)-2)+" Auditions Listed")
@@ -228,7 +343,6 @@ function addKeyword(){
   `
   var newContent = `<label for = "filterField" class = "filterLabel">Filter Keyword </label><input class = "filterInput" id = "keywordFilterInput`+i+`"></input>`
   $(".filterInputContainer").html(currentContent.split("<button")[0]+newContent+endingHTML)
-  console.log()
   localStorage.setItem("keywordIndex",i)
 }
 
@@ -251,16 +365,12 @@ function removeKeyword(){
 }
 
 function filterKeyword(audition,index,keywordCount,description,filteredList,collector){
-  console.log(localStorage.getItem("keywordIndex"))
-  console.log("keyword Count = "+keywordCount)
   if (keywordCount == 0){return}
   var keywordInput = $("#keywordFilterInput"+index).val().toLowerCase()
-  console.log("keyword Input = "+keywordInput)
   if (keywordInput == ""){return}
   if (audition.title.search(keywordInput)>-1 || audition.title == keywordInput){
     collector[audition.identifier] = audition
   }
   collector = filterDescription(audition,keywordInput,description,filteredList,collector)
-  console.log(collector)
   return collector
 }

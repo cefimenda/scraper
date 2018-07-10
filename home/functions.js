@@ -1,38 +1,10 @@
 //auditionList format = [Title,Category,Organization,State,Paid?,Date,link,identifier]
 
-$(function(){
 
-  localStorage.setItem("keywordIndex",0)
-  //auditionList = getPlayBillAuditions()
-  var displayedAuditions = auditionList
-  var table = displayTable(displayedAuditions)
-  $(".auditionCount").html(String(((table.rows).length)-1)+" Auditions Listed")
-  $("#filterButton").click(function(){
-    $("#filterBox").show()
-  });
-  $(".closeCursor").click(function(){
-    $("#filterBox").hide()
-  });
-  $("#refreshButton").click(function(){
-    $("#refreshButton").html("Refresh Table")
-    $(".jumbotronRow").hide()
-    $("#loadingBox").show()
-    $(".auditionTableContainer").hide()
-    console.log($("#loadingBox").css("display"))
-    getAuditionList()
-  });
-  $('.table > tbody > tr').click(function() {
-    console.log($(this))
-    var href = $(this).children(".hiddenLink").last().val()
-    console.log(href)
-    window.open(href)
-  });
-  $('#expandFilters').click(function(){
-    clickExpand()
-  });
-  $("#minimize").click(function(){
-    clickMinimize()
-  })
+$(function(){
+  allAuditions.getPlaybill();
+  allAuditions.getBackstage();
+
 });
 
 function clickMinimize(){
@@ -59,161 +31,80 @@ function clickExpand(){
 
 }
 
-function loadingAnimation(){
-  
-  if ($("#loadingBox").css('display') != 'none'){
-    setTimeout(changeLoadingText,500)
-    var currentValue = $(".progress-bar").attr("aria-valuenow");
-    console.log(currentValue)
-    $(".progress-bar").attr({
-      "aria-valuenow" : String(Number(currentValue)+30),
-    });
-    $(".progress-bar").css({
-      "width" : String(Number(currentValue)+30),
-    });
+
+//All commands to display auditions on screen will fall to the screen object. screen.list will always be updated to reflect all auditions displayed on screen.
+var screen = {
+  list:[],
+  display: function(){
+    $(".auditionsColumn").empty();
+    displayCardsInList(screen.list)
+    $(".auditionCount").text(screen.list.length +" Auditions Scavenged")
+  },
+}
+
+function displayCardsInList(list){
+  for (var i in list){
+      displayCard(list[i])
   }
-}
-function changeLoadingText(){
-  console.log('changing text')
-  var currentContent = $("#loadingText").html()
-  if (currentContent == "Loading..."){
-    $("#loadingText").html("Loading")
-  }else{
-    $("#loadingText").html(currentContent+".")
-  }
-  loadingAnimation()
-}
+};
+function displayCard(audition){
+var container = $(".auditionsColumn");
 
-//Functions for Scraping PlayBill
+var cardRow = $("<div>").addClass("row shadow rounded my-2");
+container.append(cardRow);
 
-function getAuditionList(){
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET','/scrape',true)
-  xhr.send(null)
-  xhr.onload = function(){
-      if(xhr.status == 200){
-          var data = JSON.parse(xhr.responseText);
-          auditionList = data
-          var displayedAuditions = auditionList
-          console.log(displayedAuditions)
-          localStorage.setItem("displayedAuditions",JSON.stringify(displayedAuditions))
-          var table = displayTable(displayedAuditions)
-          $(".auditionCount").html(String(((table.rows).length)-1)+ " Auditions Listed")
-          $("#loadingBox").hide()
-          $(".auditionTableContainer").show()
-          $(".progress-bar").attr({
-            "aria-valuenow" : "100"
-          });
-          $(".progress-bar").css({
-            "width" : "100%"
-          });
-          return data
-      }else {
-          console.log("cevap gelmedi")
-          alert("Server Unresponsive")
-          $("#loadingBox").hide()
-      }
-  }
+var cardCol = $("<div>").addClass("col-12 card py-3");
+cardRow.append(cardCol);
 
-  // $.getJSON("/", function(data){
-  //   auditionList = data
-  //   var displayedAuditions = auditionList
-  //   console.log(displayedAuditions)
-  //   localStorage.setItem("displayedAuditions",JSON.stringify(displayedAuditions))
-  //   var table = displayTable(displayedAuditions)
-  //   $(".auditionCount").html("Number of Auditions: "+String(((table.rows).length)-1))
-  //   $("#loadingBox").hide()
-  //   return data
-  // });
-  console.log('Animation should start now')
-  loadingAnimation()
+var topRow =$("<div>").addClass("row"); 
+cardCol.append(topRow);
+
+var tagsCol = $("<div>").addClass("col-10 tags float-left");
+topRow.append(tagsCol);
+
+var sourceDiv = $("<div>").addClass("source mx-1 badge badge-warning");
+sourceDiv.text("Source: "+audition.source);
+tagsCol.append(sourceDiv);
+
+if (audition.category!=undefined){
+  var categoryDiv = $("<div>").addClass("category mx-1 badge badge-info");
+  categoryDiv.text("Category: "+ audition.category);
+  tagsCol.append(categoryDiv);
 }
 
-function getPlayBillAuditions(){
-  var url = "http://www.playbill.com/job/listing"
-  $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
-  localStorage.setItem("playBillData",data.contents)
-});
-  var valueList = []
-  var str = localStorage.getItem("playBillData");
-  var list1 = str.split('<span class="data-value">')
-  for (i = 1; i < list1.length;i++){
-    var value = list1[i].split("</span>")[0]
-    valueList.push(value)
-  }
-  auditionList = reorganize(valueList)
-  return auditionList
-}
+var tagDiv = $("<div>").addClass("tag mx-1 badge badge-info");
+tagDiv.text(audition.tags);
+tagsCol.append(tagDiv);
 
-function reorganize(valueList){
-  var audition = {}
-  var keyList = ["title","category","organization","state","paid?","date","link"]
-  var str = localStorage.getItem("playBillData");
-  var linkList1 = str.split(`<td data-label="Title" class="col-0">`)
-  var linkListFin = []
-  for (i = 1; i < linkList1.length;i++){
-    var linkValue = linkList1[i].split('" modifierClass')[0]
-    var linkValue1 = linkValue.split('href="')[1]
-    linkListFin.push(linkValue1)
-    }
-  var i = 0
-  while(i < valueList.length/6){
-    auditionList["audition"+i] = {title:valueList[0+i*6], category:valueList[1+i*6], organization:valueList[2+i*6], state:valueList[3+i*6], paid:valueList[4+i*6], date:valueList[5+i*6],link:linkListFin[i],identifier:"audition"+i}
-    i ++
-  }
-  return auditionList
-}
+var unionDiv = $("<div>").addClass("union mx-1 badge badge-danger");
+unionDiv.text(audition.union);
+tagsCol.append(unionDiv);
 
-// Table related functions
+var compensationCol = $("<div>").addClass("col-2 compensation");
+topRow.append(compensationCol);
 
-function displayTable(auditionList){
-  resetTable()
-  addToTable(auditionList)
-  var table = insertRowId()
-  return table
-}
-function resetTable(){
+var paidDiv = $("<div>").addClass("compensation badge badge-success float-right mt-1");
+paidDiv.html("<h6>"+audition.paid+"</h6>");
+compensationCol.append(paidDiv);
 
-  var tbody = $("#auditionsTable").children().first().next();
-  tbody.remove();
-  $("#auditionsTable").append("<tbody></tbody>")
-  console.log($("#auditionsTable").html())
-}
-function addToTable(auditionList){
-  var tbody = $("#auditionsTable").children().first().next()
-  for(i in auditionList){
-    var audition = auditionList[i]
-    var title = audition.title
-    var category = audition.category
-    var organization = audition.organization
-    var state = audition.state
-    var paid = audition.paid
-    var date = audition.date
-    var link = audition.link
-    var fullLink =  'http://www.playbill.com'+link
-    tbody.append("<tr><td><a href="+fullLink+" target = '_blank' class = 'tableLink text-dark'>"+ title +"</a></td><td>"+category+"</td><td>"+organization+"</td><td>"+state+"</td><td>"+paid+"</td><td>"+date+"</td><td class = 'hiddenLink'><button class = action type = 'Button' id = 'backButton' onclick = openPage(" + JSON.stringify(link) + ")> Go To Page </button></td><td class = 'hiddenLink'>http://www.playbill.com" + link + "</td></tr>")
-    console.log("adding to table")
-  }console.log('added to table')
-}
+var titleRow = $("<div>").addClass("row");
+cardCol.append(titleRow);
 
-function openPage(link){
-  window.open("http://www.playbill.com"+link)
-}
+var titleDiv = $("<div>").addClass("col-10 mb-3 auditionTitle");
+titleDiv.html("<h4><a href ='"+audition.link+"' target='_blank'>"+audition.title+"</a></h4>");
+titleRow.append(titleDiv);
 
-function insertRowId(){
-  var table = document.getElementById("auditionsTable");
-  for (var i = 0, row; row = table.rows[i]; i++) {
-    row.setAttribute("id", "rowNumber"+JSON.stringify(i), 0);
-     //iterate through rows
-     //rows would be accessed using the "row" variable assigned in the for loop
-     for (var j = 0, col; col = row.cells[j]; j++) {
+var placeholderDiv = $("<div>").addClass("col-2 mb-3");
+titleRow.append(placeholderDiv);
 
-       //iterate through columns
-       //columns would be accessed using the "col" variable assigned in the for loop
-     }
-  }
-  //console.log((table.rows).length)
-  //console.log($("#rowNumber50").text())
-  //access any specific row with id "#rowNumber50" - available outside of function
-  return table
-}
+var locationRow = $("<div>").addClass("row");
+cardCol.append(locationRow);
+
+var locationCol = $("<div>").addClass("col-8 location float-left");
+locationCol.text(audition.organization);
+locationRow.append(locationCol);
+
+var dateCol = $("<div>").addClass("col-4 date");
+dateCol.html("<div class = 'float-right'>"+audition.date+"</div>");
+locationRow.append(dateCol);
+};

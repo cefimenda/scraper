@@ -1,0 +1,88 @@
+var auditions = []
+
+var allAuditions = {
+    playbill:[],
+    playbillLoaded : false,
+    getPlaybill:function(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET','/playbill',true)
+      xhr.send(null)
+      xhr.onload = function(){
+        if(xhr.status == 200){
+            allAuditions.playbillLoaded = true;
+            loadingCards.playbill.showButton()
+            var data = JSON.parse(xhr.responseText);
+            auditions.push(data);
+            allAuditions.playbill = data;
+        }else{
+          alert("Server Unresponsive");
+          return null;
+        }
+      }
+      loadingCards.playbill.display();
+    },
+    backstage:[],
+    backstageLoaded:false,
+    getBackstage:function(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET','/backstage',true)
+      xhr.send(null)
+      xhr.onload = function(){
+          if(xhr.status == 200){
+            allAuditions.backstageLoaded=true;
+            loadingCards.backstage.showButton()
+            var data = JSON.parse(xhr.responseText);
+            auditions.push(data);
+            allAuditions.backstage = data;
+          }else{
+            alert("Server Unresponsive");
+            return null;
+          }
+      }
+      loadingCards.backstage.display();
+  },
+    list: [],
+    createList: function(newList){
+      insertNewList(allAuditions.list,newList);
+    },
+    display: function(){
+        screen.list = allAuditions.list
+        screen.display()
+    },
+    clearDisplay: function(){
+      $(".auditionsColumn").empty();
+    }
+}
+
+
+function insertNewList(existingList,newList){
+  if (existingList.length == 0){
+    allAuditions.list = [];
+    for (var i in newList){
+      allAuditions.list.push(newList[i]);
+    }
+  }else{
+    for (var i =0; i<newList.length;i++){
+      incomingAudition = newList[i];
+      incomingDate = incomingAudition.date
+
+      incomingMonth = Number(incomingDate.split("/")[0]);
+      incomingDay = Number(incomingDate.split("/")[1]);
+      incomingYear = Number(incomingDate.split("/")[2]);
+  
+      for(var n=0; n<existingList.length;n++){
+        existingAudition = existingList[n];
+        existingDate = existingAudition.date;
+        existingMonth = Number(existingDate.split("/")[0]);
+        existingDay = Number(existingDate.split("/")[1]);
+        existingYear = Number(existingDate.split("/")[2]);
+  
+        if (incomingYear>=existingYear && incomingMonth>=existingMonth && incomingDay>existingDay){
+          existingList.splice(n,0,incomingAudition)
+          break
+        }else{continue}
+      }
+    }
+  }
+}
+

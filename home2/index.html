@@ -16,11 +16,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src = "UIObjects.js" type = "text/javascript"></script>
-    <script src = "auditions.js" type = "text/javascript"></script>
-    <script src = "functions.js" type = "text/javascript"></script>
-    <script src = "filters.js" type = "text/javascript"> </script>
-    <link rel = "stylesheet" type = "text/css" href = "style.css">
+    <script src = "assets/javascript/auditions.js" type = "text/javascript"></script>
+    <script src = "assets/javascript/functions.js" type = "text/javascript"></script>
+    <script src = "assets/javascript/filters.js" type = "text/javascript"> </script>
+    <link rel = "stylesheet" type = "text/css" href = "assets/css/style.css">
 
 </head>
 <body>
@@ -42,13 +41,76 @@
     </nav>
     
     <br>
-    <div class="container m-2">
-
+    <div class="container">
+        <!-- intro text -->
+        <div class="row jumbotronRow">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <h1 class="display-4">Welcome to Scavenger!</h1>
+                    <p class="lead">You can use this tool to easily filter through playbill auditions!</p>
+                    <hr class="my-4">
+                    <p>Click "Load Table" on the header of the page to start. Initial loading may take a minute depending on your internet connection.</p>
+                </div>
+            </div>
+        </div>
         <!-- loading box -->
+        <div class="row" id = "loadingBox">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <h1 class="display-4" id = "loadingText">Loading...</h1>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- table+filters -->
-        <div class="row auditionTableContainer m-0">
+        <div class="row auditionTableContainer">
+            <!-- auditions -->
+            <div class="col col-sm-10 auditionsColumn">
+                <div class="row shadow rounded">
+                    <div class="col-12 card py-3">
+                        <div class="row">
+                            <div class="col-10 tags float-left">
+                                <div class = "source badge badge-warning">
+                                    Source: Playbill
+                                </div>          
+                                <div class = "category badge badge-info">
+                                     Category: Performer
+                                </div>
+                                <div class = "tag badge badge-info">
+                                    Artist
+                                    Something
+                                    SomethingElse
+                                </div>
+                                <div class = "union badge badge-danger">
+                                    Union
+                                </div>
+                            </div>
+                            <div class="col-2 compensation">
+                                <div class = "compensation badge badge-success float-right mt-1">
+                                   <h4>Paid</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mb-3 auditionTitle">
+                                <h2>This is a Title</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8 location float-left">
+                                NEW YORK
+                            </div>
+                            <div class="col-4 date float-right">
+                                <h5 class = "float-right">Today</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- filters -->
-            <div class="col col-sm-4 filterBar card m-0">
+            <div class="col col-sm-2 filterBar">
                 <form>
                     <div class="form-group mb-2">
                         <label for="titleFilterInput">Title:</label>
@@ -123,7 +185,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn-sm btn-warning btn-block my-2" id="expandFilters">More Categories Coming Soon</button>
+                    <button type="button" class="btn-sm btn-warning btn-block my-2" id="expandFilters">More Categories</button>
                     <button type="button" class="btn-sm btn-warning btn-block my-2" id="minimize" style="display:none">Show Less</button>
 
                     <div class="form-group my-2">
@@ -138,35 +200,10 @@
                             <option value="notPaid">Unpaid</option>
                         </select>
                     </div>
-                    <button type="button" id="submitButton" class="btn-sm btn-primary btn-block mt-3">Activate Filter</button>
+                    <button type="button" id="submitButton" onclick="activateFilter()" class="btn-sm btn-primary btn-block mt-3">Activate Filter</button>
                     <!-- <button type="button" id = "displayFilteredTableButton" onclick="displayFilteredTable(filteredList)" class="btn btn-secondary btn-block">Display Table</button> -->
                 </form>
             </div>
-             <!-- auditions -->
-             <div class="col col-sm-8 auditionsBody">
-                 <div class="row loadingRow">
-                    <div class="col-6 card shadow-lg loadingCardPlaybill d-none py-3 px-5 border-light bg-secondary text-light">
-                        <h5 id = "loadingTextPlaybill">Loading Playbill ...</h5>
-                        <div class="progress playbillBar">
-                            <div class="progress-bar playbillProgress progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
-                        </div>
-                        <button class="loadingButtonPlaybill loadingButton d-none btn-outline-light mt-2">Display Results</button>
-                    </div>
-                    <div class="col-6 card shadow-lg loadingCardBackstage d-none py-3 px-5 border-light bg-secondary text-light">
-                        <h5 id = "loadingTextBackstage">Loading Backstage ...</h5>
-                        <div class="progress backstageBar">
-                            <div class="progress-bar backstageProgress progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
-                        </div>
-                        <button class="loadingButtonBackstage loadingButton d-none btn-outline-light mt-2">Display Results</button>
-                    </div>
-                    <div class="auditionsColumn">
-
-                    </div>
-                 </div>
-                   
-                </div>
-
-
         </div>
     </div>
 </body>

@@ -7,16 +7,12 @@ let scrape = async () => {
     await page.goto('http://www.playbill.com/job/listing'); //goes to link
     await page.waitFor(1000); // waits for the page to load - not always necessary
     // Scrape
-    for (i = 0 ; i<13 ; i++){
-        console.log(i)
-        await page.waitFor(200); // waits for the page to load - not always necessary
-        // if(document.querySelector('body > div.bsp-site-wrapper.listing.listing-event.bsp-onDomInsert-inserted-54.pb-trackevents-item > div.bsp-site.bsp-onDomInsert-inserted-59.pb-banner-item > div > div:nth-child(4) > div > div > div > div > div.bsp-component-content > div > div > div > button')==null){
-        //     break
-        // }
+    for (i = 0 ; i<15 ; i++){
+        await page.waitFor(100); // waits for the page to load - not always necessary
         await page.click('body > div.bsp-site-wrapper.listing.listing-event.bsp-onDomInsert-inserted-54.pb-trackevents-item > div.bsp-site.bsp-onDomInsert-inserted-59.pb-banner-item > div > div:nth-child(4) > div > div > div > div > div.bsp-component-content > div > div > div > button'); //click on anything with selector
     }
     const result = await page.evaluate(() => { //takes page and makes it accessible thru DOM
-        let auditionList = [];
+        let auditionList = {};
         //let elements = document.querySelectorAll('.product_pod');
         
         var i = 1
@@ -59,11 +55,12 @@ let scrape = async () => {
             //     var state = stateElem.innerText;
             // }
             if (paidElem == null){
-                var paid = "Unpaid";
-            }else if(paidElem.innerText.toLowerCase()=="paid"){
-                var paid = "Paid"
+                var paid = "";
             }else{
-                var paid = "Unpaid"
+                var paid = paidElem.innerText;
+            }
+            if (paid ==""){
+                paid = "Unpaid"
             }
             if (dateElem == null){
                 var date = "";
@@ -73,10 +70,10 @@ let scrape = async () => {
             if (linkElem == null){
                 var link = "";
             }else{
-                var link = "http://www.playbill.com"+linkElem.getAttribute("href")
+                var link = linkElem.getAttribute("href")
             }
-            var audition = {title,category,organization,state,paid,date,link,identifier:'audition'+i,source:"Playbill"}
-            auditionList.push(audition)
+            var audition = {title,category,organization,state,paid,date,link,identifier:'audition'+i,source:"playbill"}
+            auditionList['audition'+i] = audition
             i++
             if (i>=501){break}
         }
@@ -90,5 +87,3 @@ let scrape = async () => {
 module.exports = {
     scrape
 }
-
-
