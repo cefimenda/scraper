@@ -41,3 +41,18 @@ label:first-child{
 a{
     color: black;
 }
+
+@media only screen and (max-width: 640px){
+    .filterBar{
+        position:static;
+        left:auto;
+    }
+    .auditionsBody{
+        margin-top:10px;
+        left:auto;
+
+    }
+    #loadingTextPlaybill,#loadingTextBackstage{
+        font-size: 13px;
+    }
+}

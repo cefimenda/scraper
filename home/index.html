@@ -25,13 +25,7 @@
 <body>
     <!-- NavBar -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-primary text-light">
-        <a class="navbar-brand  text-light" href="#">Scavenger</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <button class="btn btn-outline-warning my-2 my-sm-0" id = "refreshButton" type="button">Load Table</button>
-        </div>
+        <a class="navbar-brand text-light" href="#">Scavenger</a>
         <span class="navbar-text  text-light">
             <p class = "auditionCount"></p>
         </span>
@@ -42,12 +36,11 @@
     
     <br>
     <div class="container m-2">
-
         <!-- loading box -->
         <!-- table+filters -->
         <div class="row auditionTableContainer m-0">
             <!-- filters -->
-            <div class="col col-sm-4 filterBar card m-0">
+            <div class="col-12 col-sm-4 filterBar card m-0">
                 <form>
                     <div class="form-group mb-2">
                         <label for="titleFilterInput">Title:</label>
@@ -142,7 +135,7 @@
                 </form>
             </div>
              <!-- auditions -->
-             <div class="col col-sm-8 auditionsBody">
+             <div class="col-12 col-sm-8 auditionsBody">
                  <div class="row loadingRow">
                     <div class="col-6 card shadow-lg loadingCardPlaybill d-none py-3 px-5 border-light bg-secondary text-light">
                         <h5 id = "loadingTextPlaybill">Loading Playbill ...</h5>
@@ -158,7 +151,7 @@
                         </div>
                         <button class="loadingButtonBackstage loadingButton d-none btn-outline-light mt-2">Display Results</button>
                     </div>
-                    <div class="auditionsColumn">
+                    <div class="col-sm-12 auditionsColumn">
 
                     </div>
                  </div>
