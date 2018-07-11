@@ -9,11 +9,15 @@ var allAuditions = {
       xhr.send(null)
       xhr.onload = function(){
         if(xhr.status == 200){
-            allAuditions.playbillLoaded = true;
-            loadingCards.playbill.showButton()
             var data = JSON.parse(xhr.responseText);
-            auditions.push(data);
-            allAuditions.playbill = data;
+            if (isNaN(Number(data.value))){
+              allAuditions.playbillLoaded = true;
+              loadingCards.playbill.showButton()
+              auditions.push(data);
+              allAuditions.playbill = data;
+            }else{
+              setTimeout(allAuditions.getPlaybill,2000)
+            }
         }else{
           alert("Server Unresponsive");
           return null;
@@ -28,16 +32,20 @@ var allAuditions = {
       xhr.open('GET','/backstage',true)
       xhr.send(null)
       xhr.onload = function(){
-          if(xhr.status == 200){
-            allAuditions.backstageLoaded=true;
-            loadingCards.backstage.showButton()
+        if(xhr.status == 200){
             var data = JSON.parse(xhr.responseText);
-            auditions.push(data);
-            allAuditions.backstage = data;
-          }else{
-            alert("Server Unresponsive");
-            return null;
-          }
+            if (isNaN(Number(data.value))){
+              allAuditions.backstageLoaded = true;
+              loadingCards.backstage.showButton()
+              auditions.push(data);
+              allAuditions.backstage = data;
+            }else{
+              setTimeout(allAuditions.getBackstage,2000)
+            }
+        }else{
+          alert("Server Unresponsive");
+          return null;
+        }
       }
       loadingCards.backstage.display();
   },

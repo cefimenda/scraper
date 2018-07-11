@@ -2,7 +2,7 @@
 
 
 $(function(){
-  allAuditions.getPlaybill();
+  allAuditions.getPlaybill()
   allAuditions.getBackstage();
 
 });
