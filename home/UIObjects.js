@@ -9,9 +9,9 @@ var loadingCards={
         button: function(){
             return $(".loadingButtonBackstage")
         },
-        display:function(){
+        display:function(increment){
             $(".loadingCardBackstage").removeClass("d-none");
-            loadingAnimation(loadingCards.backstage.card(),$(".backstageProgress"),2,"backstage")
+            loadingAnimation(loadingCards.backstage.card(),$(".backstageProgress"),increment,"backstage")
         },
         showButton:function(){
             $(".backstageBar").addClass("d-none");
@@ -31,9 +31,9 @@ var loadingCards={
         button: function(){
             return $(".loadingButtonPlaybill")
         },
-        display:function(){
+        display:function(increment){
             $(".loadingCardPlaybill").removeClass("d-none");
-            loadingAnimation(loadingCards.playbill.card(),$(".playbillProgress"),10,"playbill")
+            loadingAnimation(loadingCards.playbill.card(),$(".playbillProgress"),increment,"playbill")
         },
         showButton:function(){
             $(".playbillBar").addClass("d-none")
@@ -48,18 +48,16 @@ var loadingCards={
 };
 
 function loadingAnimation(loadingCard,progressBar,increment,source){
-    setTimeout(function(){
-        if(allAuditions[source].length==0){
-            var currentValue = progressBar.attr("aria-valuenow");
-            progressBar.attr({
-                "aria-valuenow" : String(Number(currentValue)+increment),
-            });
-            progressBar.css({
-                "width" : String(Number(currentValue)+increment),
-            });
-            loadingAnimation(loadingCard,progressBar,increment,source)
-        }
-    },500);
+
+    if(allAuditions[source].length==0){
+        progressBar.attr({
+            "aria-valuenow" :increment,
+        });
+        progressBar.css({
+            "width" : increment+"%",
+        });
+    }
+
   };
 
 $(function(){

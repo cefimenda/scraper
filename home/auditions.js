@@ -17,6 +17,7 @@ var allAuditions = {
               allAuditions.playbill = data;
             }else{
               setTimeout(allAuditions.getPlaybill,2000)
+              loadingCards.playbill.display(data.value)
             }
         }else{
           alert("Server Unresponsive");
@@ -41,6 +42,7 @@ var allAuditions = {
               allAuditions.backstage = data;
             }else{
               setTimeout(allAuditions.getBackstage,2000)
+              loadingCards.backstage.display(data.value)
             }
         }else{
           alert("Server Unresponsive");
