@@ -26,7 +26,7 @@
     <!-- NavBar -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-primary text-light">
         <a class="navbar-brand text-light" href="#">Scavenger</a>
-        <span class="navbar-text  text-light">
+        <span class="navbar-text ml-auto text-light">
             <p class = "auditionCount"></p>
         </span>
     </nav>
@@ -40,7 +40,7 @@
         <!-- table+filters -->
         <div class="row auditionTableContainer m-0">
             <!-- filters -->
-            <div class="col-12 col-sm-4 filterBar card m-0">
+            <div class="col-12 col-lg-4 filterBar card m-0">
                 <form>
                     <div class="form-group mb-2">
                         <label for="titleFilterInput">Title:</label>
@@ -120,7 +120,7 @@
 
                     <div class="form-group my-2">
                         <label for="stateFilterInput">State:</label>
-                        <input type="text" class="form-control p-1" id="stateFilterInput" aria-describedby="State" placeholder="Enter State (i.e. NY, LA etc.)">
+                        <input type="text" class="form-control p-1" id="stateFilterInput" aria-describedby="State" placeholder="Enter State (i.e. NY, CA etc.)">
                     </div>
                     <div class="form-group my-2">
                         <label for="isAuditionPaid">Paid/Not Paid:</label>
@@ -135,7 +135,7 @@
                 </form>
             </div>
              <!-- auditions -->
-             <div class="col-12 col-sm-8 auditionsBody">
+             <div class="col-12 col-lg-8 auditionsBody">
                  <div class="row loadingRow">
                     <div class="col-6 card shadow-lg loadingCardPlaybill d-none py-3 px-5 border-light bg-secondary text-light">
                         <h5 id = "loadingTextPlaybill">Loading Playbill ...</h5>

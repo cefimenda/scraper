@@ -103,6 +103,7 @@ function checkPaid(audition,condition){
   }
 }
 function contains(target,condition){
+  if (target == undefined){return false}
   if (target.toLowerCase().search(condition)>-1){
     return true
   }else{return false}

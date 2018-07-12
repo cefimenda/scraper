@@ -42,7 +42,7 @@ a{
     color: black;
 }
 
-@media only screen and (max-width: 640px){
+@media only screen and (max-width: 992px){
     .filterBar{
         position:static;
         left:auto;
