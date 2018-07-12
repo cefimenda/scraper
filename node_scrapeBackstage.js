@@ -93,7 +93,7 @@ let scrape = async () => {
                 if (date == undefined){continue}
 
                 //Get Link
-                var link = titleElem.getAttribute("href") 
+                var link = "http://www.backstage.com"+titleElem.getAttribute("href") 
 
                 //Get Paid
                 var paidElem = document.querySelector("#main__container > div > div > div:nth-child(3) > div > div:nth-child("+i+") > div.col-lg-9.col-md-9.col-sm-12.casting__listing--prod > div.row > div.col-lg-9.col-md-9.col-sm-12 > div > a.tag.paid")
