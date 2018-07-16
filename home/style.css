@@ -54,6 +54,12 @@ a{
         position:static;
         left:auto;
     }
+    .filtersTitle{
+        position: relative;
+    }
+    .sourceFilter{
+        margin-top:10px;
+    }
     .auditionsBody{
         margin-top:10px;
         left:auto;
