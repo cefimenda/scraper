@@ -15,8 +15,6 @@ var auditions = require( './node_auditions' );
 var scrapePlaybill = require('./node_scrapePlaybill')
 var scrapeBackstage = require('./node_scrapeBackstage')
 
-
-
 app.get("/playbill",(req,res)=> {
     console.log("received playbill request")
     console.log('gettingPlaybill is'+String(auditions.gettingPlaybill))

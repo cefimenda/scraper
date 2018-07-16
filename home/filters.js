@@ -7,7 +7,7 @@ var filter={
     // filter.category();
     for (var i in allAuditions.list){
       var audition = allAuditions.list[i]
-      if (checkTitle(audition,input.title()) && checkCategory(audition,input.category()) && checkState(audition,input.state()) && checkPaid(audition,input.paid())){
+      if (checkSource(audition,input.source()) && checkTitle(audition,input.title()) && checkCategory(audition,input.category()) && checkState(audition,input.state()) && checkPaid(audition,input.paid())){
         filter.list.push(audition)
       }
     }
@@ -56,11 +56,19 @@ var filter={
 };
 //object that gets user inputs in different sections of the filterbar
 var input ={
+  source:function(){
+    var checkedList = $('input[name="sourceCheck"]:checked').next();
+    var sList = [];
+    for(var i=0; i<checkedList.length ; i++){
+      sList.push(checkedList[i].innerText.toLowerCase());
+    }
+    return sList
+  },
   title:function(){ //returns the input in title input
     return $("#titleFilterInput").val().toLowerCase();
   },
   category:function(){ //returns list of checked categories
-    var checkedList = $("input:checked").next();
+    var checkedList = $('input[name="catCheck"]:checked').next();
     var catList = [];
     for (var i = 0; i<checkedList.length;i++){
       catList.push(checkedList[i].innerText.toLowerCase());
@@ -74,7 +82,15 @@ var input ={
     return $('#isAuditionPaid').find(":selected").text().toLowerCase()
   }
 }
-
+function checkSource(audition,condition){
+  console.log(audition.source)
+  console.log(condition)
+  for(var n in condition){
+    if(audition.source.toLowerCase() == condition[n]){
+      return true
+    }
+  }
+}
 function checkTitle(audition,condition){
   if (condition ==""){return true}
   if (contains(audition.title,condition)){
@@ -115,10 +131,6 @@ $(function(){
     filter.run()
   });
 })
-
-
-
-
 
 function listSelector(){ //this will become a way to seperate "AND" filters from "OR" filter --> "AND" filter uses filteredList, "OR" filter uses auditionList
   if (filteredList.isEmpty){

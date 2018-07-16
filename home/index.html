@@ -40,8 +40,26 @@
         <!-- table+filters -->
         <div class="row auditionTableContainer m-0">
             <!-- filters -->
-            <div class="col-12 col-lg-4 filterBar card m-0">
+            <div class="col-12 col-lg-4 filterBar card pt-0 m-0">
+                <div class="row">
+                    <div class="col-12 py-2 mb-3 bg-primary text-light mt-0 filtersTitle">
+                        <h4>Filters</h4>
+                    </div>
+                </div>
                 <form>
+                    <div class="form-group sourceFilter">
+                        <label for="categoryFilterInput">Source:</label>
+                    </div>
+                    <div class="form-check-container">
+                        <div class="form-group form-check col-12 checkboxes">
+                            <div class="form-group d-inline sourceChecks"id="sourceChecks">
+                                <input type="checkbox" class="form-check-input" id="playbillBox" name="sourceCheck" checked>
+                                <label class="sourceCheck form-check-label mr-5" id="playbillBoxLabel1" for="playbillBox">Playbill</label>
+                                <input type="checkbox" class="form-check-input ml-4" id="backstageBox" name="sourceCheck" checked>
+                                <label class="source Check form-check-label ml-5" id="backstageBoxLabel2" for="backstageBox">Backstage</label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group mb-2">
                         <label for="titleFilterInput">Title:</label>
                         <input type="text" class="form-control p-1" id="titleFilterInput" aria-describedby="Audition Title" placeholder="Enter Title">
@@ -52,20 +70,20 @@
                     <div class="form-check-container d-inline">
                         <div class="form-group form-check col-sm-3 checkboxes">
                             <div class="form-group">
-                                <input type="checkbox" class="form-check-input" id="checkbox1">
-                                <label class="form-check-label" id="checkboxLabel1" for="checkbox1">Performer</label>
+                                <input type="checkbox" class="form-check-input" id="checkbox1" name="catCheck">
+                                <label class="categoryCheck form-check-label" id="checkboxLabel1" for="checkbox1">Performer</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" class="form-check-input" id="checkbox2">
-                                <label class="form-check-label" id="checkboxLabel2" for="checkbox2">Technical</label>
+                                <input type="checkbox" class="form-check-input" id="checkbox2" name="catCheck">
+                                <label class="categoryCheck form-check-label" id="checkboxLabel2" for="checkbox2">Technical</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" class="form-check-input" id="checkbox3">
-                                <label class="form-check-label" id="checkboxLabel3" for="checkbox3">Internship</label>
+                                <input type="checkbox" class="form-check-input" id="checkbox3" name="catCheck">
+                                <label class="categoryCheck form-check-label" id="checkboxLabel3" for="checkbox3">Internship</label>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" class="form-check-input" id="checkbox4">
-                                <label class="form-check-label" id="checkboxLabel4" for="checkbox4">Administrative</label>
+                                <input type="checkbox" class="form-check-input" id="checkbox4" name="catCheck">
+                                <label class="categoryCheck form-check-label" id="checkboxLabel4" for="checkbox4">Administrative</label>
                             </div>
                         </div>
                         <div class="form-group form-check col-sm-3 d-none checkboxes no-mini">

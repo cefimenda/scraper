@@ -19,6 +19,13 @@ label:first-child{
     padding-bottom: 20px;
     overflow-y:scroll;
     opacity: 1;
+    max-height:80%
+}
+.filtersTitle{
+    position:absolute;
+}
+.sourceFilter{
+    margin-top:60px;
 }
 .auditionsBody{
     left:42%;
