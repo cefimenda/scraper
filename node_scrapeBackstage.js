@@ -128,11 +128,17 @@ let scrape = async () => {
 
     // Scrape
     var funcList = []
-    for(var i=1;i<11;i++){
+    for(var i=1;i<6;i++){
         funcList.push(scrapePage(i,auditionList,browser))
     }
 
     const responses = await Promise.all(funcList); //--> to run all scraping simultaneously
+
+    var funcList = []
+    for(var i=6;i<11;i++){
+        funcList.push(scrapePage(i,auditionList,browser))
+    }
+    const responses2 = await Promise.all(funcList); //--> to run all scraping simultaneously
     browser.close();     //close browser
     console.log(auditionList)
     auditions.backstage = auditionList
