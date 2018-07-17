@@ -129,7 +129,7 @@ let scrape = async () => {
 
     // Scrape
     var funcList = []
-    for(var i=1;i<21;i++){
+    for(var i=1;i<11;i++){
         funcList.push(scrapePage(i,auditionList,browser))
     }
     const responses = await Promise.all(funcList);
