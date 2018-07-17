@@ -1,8 +1,7 @@
 var auditions = require( './node_auditions' );
 var puppeteer = require('puppeteer');
 
-async function scrapePage(pageNum,auditionList){
-    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox'], headless: true}); //opens browser - headless false --> displays action on screen
+async function scrapePage(pageNum,auditionList,browser){
     console.log("scraping pageNum "+pageNum)
     const page = await browser.newPage(); //opens page
     page.setDefaultNavigationTimeout(0) 
@@ -118,20 +117,20 @@ async function scrapePage(pageNum,auditionList){
     for (var i in result){
         auditionList.push(result[i]);
     }
-    auditions.backstageProgress=auditionList.length/(50*12)*100
+    auditions.backstageProgress=auditionList.length/(20*12)*100
     browser.close();     //close browser
 }
 let scrape = async () => {
-
     auditions.gettingBackstage=true;
-    
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox'], headless: true}); //opens browser - headless false --> displays action on screen
+
     console.log("scrape begins")
     var auditionList = [];
 
     // Scrape
     var funcList = []
-    for(var i=1;i<51;i++){
-        funcList.push(scrapePage(i,auditionList))
+    for(var i=1;i<21;i++){
+        funcList.push(scrapePage(i,auditionList,browser))
     }
     const responses = await Promise.all(funcList);
     console.log(auditionList)
