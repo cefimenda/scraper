@@ -117,7 +117,7 @@ async function scrapePage(pageNum,auditionList,browser){
     for (var i in result){
         auditionList.push(result[i]);
     }
-    auditions.backstageProgress=auditionList.length/(20*12)*100
+    auditions.backstageProgress=auditionList.length/(10*12)*100
     browser.close();     //close browser
 }
 let scrape = async () => {
@@ -132,7 +132,11 @@ let scrape = async () => {
     for(var i=1;i<11;i++){
         funcList.push(scrapePage(i,auditionList,browser))
     }
-    const responses = await Promise.all(funcList);
+    for (var i in funcList){
+        funcList[i]
+    }
+
+    // const responses = await Promise.all(funcList); --> to run all scraping simultaneously
     console.log(auditionList)
     auditions.backstage = auditionList
     auditions.backstageProgress = 100
