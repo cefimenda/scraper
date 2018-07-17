@@ -118,7 +118,6 @@ async function scrapePage(pageNum,auditionList,browser){
         auditionList.push(result[i]);
     }
     auditions.backstageProgress=auditionList.length/(10*12)*100
-    browser.close();     //close browser
 }
 let scrape = async () => {
     auditions.gettingBackstage=true;
@@ -132,15 +131,13 @@ let scrape = async () => {
     for(var i=1;i<11;i++){
         funcList.push(scrapePage(i,auditionList,browser))
     }
-    for (var i in funcList){
-        funcList[i]
-    }
 
-    // const responses = await Promise.all(funcList); --> to run all scraping simultaneously
+    const responses = await Promise.all(funcList); //--> to run all scraping simultaneously
+    browser.close();     //close browser
     console.log(auditionList)
     auditions.backstage = auditionList
     auditions.backstageProgress = 100
-};  
+};      
 
 module.exports={
     scrape
