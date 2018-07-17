@@ -16,7 +16,7 @@ var allAuditions = {
               auditions.push(data);
               allAuditions.playbill = data;
             }else{
-              setTimeout(allAuditions.getPlaybill,2000)
+              setTimeout(allAuditions.getPlaybill,5000)
               loadingCards.playbill.display(data.value)
             }
         }else{
@@ -41,7 +41,7 @@ var allAuditions = {
               auditions.push(data);
               allAuditions.backstage = data;
             }else{
-              setTimeout(allAuditions.getBackstage,2000)
+              setTimeout(allAuditions.getBackstage,5000)
               loadingCards.backstage.display(data.value)
             }
         }else{
