@@ -128,23 +128,11 @@ let scrape = async () => {
 
     // Scrape
     var funcList = []
-    for(var i=1;i<4;i++){
+    for(var i=1;i<11;i++){
         funcList.push(scrapePage(i,auditionList,browser))
+        var responses = await Promise.all(funcList); //--> to run all scraping simultaneously
+        funcList=[]
     }
-
-    const responses = await Promise.all(funcList); //--> to run all scraping simultaneously
-
-    var funcList = []
-    for(var i=4;i<7;i++){
-        funcList.push(scrapePage(i,auditionList,browser))
-    }
-    const responses2 = await Promise.all(funcList); //--> to run all scraping simultaneously
-
-    var funcList = []
-    for(var i=7;i<11;i++){
-        funcList.push(scrapePage(i,auditionList,browser))
-    }
-    const responses3 = await Promise.all(funcList); //--> to run all scraping simultaneously
 
     browser.close();     //close browser
     console.log(auditionList)
