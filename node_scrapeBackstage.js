@@ -4,7 +4,7 @@ var puppeteer = require('puppeteer');
 async function scrapePage(pageNum,auditionList,browser){
     console.log("scraping pageNum "+pageNum)
     const page = await browser.newPage(); //opens page
-    page.setDefaultNavigationTimeout(0) 
+    page.setDefaultNavigationTimeout(60000) 
     await page.goto('https://www.backstage.com/casting/?gender=B&max_age=100&min_age=0&page='+pageNum+'&radius=50&sort_by=newest'); //goes to link
     await page.waitFor(1000); // waits for the page to load - not always necessary
     var result = await page.evaluate(() => {
@@ -130,7 +130,7 @@ let scrape = async () => {
     var funcList = []
     for(var i=1;i<11;i++){
         funcList.push(scrapePage(i,auditionList,browser))
-        var responses = await Promise.all(funcList); //--> to run all scraping simultaneously
+        await Promise.all(funcList); //--> to run all scraping simultaneously
         funcList=[]
     }
 

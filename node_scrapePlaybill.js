@@ -6,7 +6,6 @@ let scrape = async () => {
         const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox'], headless: true}); //opens browser - headless false --> displays action on screen
         
         const page = await browser.newPage(); //opens page
-        page.setDefaultNavigationTimeout(0) 
 
 
         await page.goto('http://www.playbill.com/job/listing'); //goes to link
