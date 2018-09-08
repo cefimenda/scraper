@@ -1,13 +1,13 @@
 //auditionList format = [Title,Category,Organization,State,Paid?,Date,link,identifier]
 
 
-$(function(){
+$(function () {
   allAuditions.getPlaybill();
   allAuditions.getBackstage();
 
 });
 
-function clickMinimize(){
+function clickMinimize() {
   $(".filterBar").removeClass("col-sm-12")
   $(".filterBar").addClass("col-sm-2")
   $(".tableColumn").show()
@@ -18,7 +18,7 @@ function clickMinimize(){
     "position": "fixed"
   });
 }
-function clickExpand(){
+function clickExpand() {
   $(".filterBar").removeClass("col-sm-2");
   $(".filterBar").addClass("col-sm-12");
   $(".filterBar").css({
@@ -34,77 +34,77 @@ function clickExpand(){
 
 //All commands to display auditions on screen will fall to the screen object. screen.list will always be updated to reflect all auditions displayed on screen.
 var screen = {
-  list:[],
-  display: function(){
+  list: [],
+  display: function () {
     $(".auditionsColumn").empty();
     displayCardsInList(screen.list)
-    $(".auditionCount").text(screen.list.length +" Auditions Scavenged")
+    $(".auditionCount").text(screen.list.length + " Auditions Scavenged")
   },
 }
 
-function displayCardsInList(list){
-  for (var i in list){
-      displayCard(list[i])
+function displayCardsInList(list) {
+  for (var i in list) {
+    displayCard(list[i])
   }
 };
-function displayCard(audition){
-var container = $(".auditionsColumn");
+function displayCard(audition) {
+  var container = $(".auditionsColumn");
 
-var cardRow = $("<div>").addClass("row shadow rounded my-2");
-container.append(cardRow);
+  var cardRow = $("<div>").addClass("row shadow rounded my-2");
+  container.append(cardRow);
 
-var cardCol = $("<div>").addClass("col-12 card py-3");
-cardRow.append(cardCol);
+  var cardCol = $("<div>").addClass("col-12 card py-3");
+  cardRow.append(cardCol);
 
-var topRow =$("<div>").addClass("row"); 
-cardCol.append(topRow);
+  var topRow = $("<div>").addClass("row");
+  cardCol.append(topRow);
 
-var tagsCol = $("<div>").addClass("col-10 tags float-left");
-topRow.append(tagsCol);
+  var tagsCol = $("<div>").addClass("col-10 tags float-left");
+  topRow.append(tagsCol);
 
-var sourceDiv = $("<div>").addClass("source mx-1 badge badge-warning");
-sourceDiv.text("Source: "+audition.source);
-tagsCol.append(sourceDiv);
+  var sourceDiv = $("<div>").addClass("source mx-1 badge badge-warning");
+  sourceDiv.text("Source: " + audition.source);
+  tagsCol.append(sourceDiv);
 
-if (audition.category!=undefined){
-  var categoryDiv = $("<div>").addClass("category mx-1 badge badge-info");
-  categoryDiv.text("Category: "+ audition.category);
-  tagsCol.append(categoryDiv);
-}
+  if (audition.category != undefined) {
+    var categoryDiv = $("<div>").addClass("category mx-1 badge badge-info");
+    categoryDiv.text("Category: " + audition.category);
+    tagsCol.append(categoryDiv);
+  }
 
-var tagDiv = $("<div>").addClass("tag mx-1 badge badge-info");
-tagDiv.text(audition.tags);
-tagsCol.append(tagDiv);
+  var tagDiv = $("<div>").addClass("tag mx-1 badge badge-info");
+  tagDiv.text(audition.tags);
+  tagsCol.append(tagDiv);
 
-var unionDiv = $("<div>").addClass("union mx-1 badge badge-danger");
-unionDiv.text(audition.union);
-tagsCol.append(unionDiv);
+  var unionDiv = $("<div>").addClass("union mx-1 badge badge-danger");
+  unionDiv.text(audition.union);
+  tagsCol.append(unionDiv);
 
-var compensationCol = $("<div>").addClass("col-2 compensation");
-topRow.append(compensationCol);
+  var compensationCol = $("<div>").addClass("col-2 compensation");
+  topRow.append(compensationCol);
 
-var paidDiv = $("<div>").addClass("compensation badge badge-success float-right mt-1");
-paidDiv.html("<h6>"+audition.paid+"</h6>");
-compensationCol.append(paidDiv);
+  var paidDiv = $("<div>").addClass("compensation badge badge-success float-right mt-1");
+  paidDiv.html("<h6>" + audition.compensation + "</h6>");
+  compensationCol.append(paidDiv);
 
-var titleRow = $("<div>").addClass("row");
-cardCol.append(titleRow);
+  var titleRow = $("<div>").addClass("row");
+  cardCol.append(titleRow);
 
-var titleDiv = $("<div>").addClass("col-10 mb-3 auditionTitle");
-titleDiv.html("<h4><a href ='"+audition.link+"' target='_blank'>"+audition.title+"</a></h4>");
-titleRow.append(titleDiv);
+  var titleDiv = $("<div>").addClass("col-10 mb-3 auditionTitle");
+  titleDiv.html("<h4><a href ='" + audition.link + "' target='_blank'>" + audition.title + "</a></h4>");
+  titleRow.append(titleDiv);
 
-var placeholderDiv = $("<div>").addClass("col-2 mb-3");
-titleRow.append(placeholderDiv);
+  var placeholderDiv = $("<div>").addClass("col-2 mb-3");
+  titleRow.append(placeholderDiv);
 
-var locationRow = $("<div>").addClass("row");
-cardCol.append(locationRow);
+  var locationRow = $("<div>").addClass("row");
+  cardCol.append(locationRow);
 
-var locationCol = $("<div>").addClass("col-8 location float-left");
-locationCol.text(audition.organization);
-locationRow.append(locationCol);
+  var locationCol = $("<div>").addClass("col-8 location float-left");
+  locationCol.text(audition.organization);
+  locationRow.append(locationCol);
 
-var dateCol = $("<div>").addClass("col-4 date");
-dateCol.html("<div class = 'float-right'>"+audition.date+"</div>");
-locationRow.append(dateCol);
+  var dateCol = $("<div>").addClass("col-4 date");
+  dateCol.html("<div class = 'float-right'>" + audition.date + "</div>");
+  locationRow.append(dateCol);
 };

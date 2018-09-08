@@ -136,7 +136,7 @@ function checkState(audition,condition){
 }
 function checkPaid(audition,condition){
   if (condition =="either"){return true};
-  if(audition.paid.toLowerCase()===condition){
+  if(audition.compensation.toLowerCase()===condition){
     return true;
   }
 }

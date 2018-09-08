@@ -9,6 +9,11 @@ var allAuditions = {
       xhr.send(null)
       xhr.onload = function(){
         if(xhr.status == 200){
+          if(!xhr.responseText){
+            console.log("Incoming NULL")
+            return
+          }
+          console.log(xhr.responseText)
             var data = JSON.parse(xhr.responseText);
             if (isNaN(Number(data.value))){
               allAuditions.playbillLoaded = true;
