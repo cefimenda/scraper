@@ -1,77 +1,78 @@
 
 
-var loadingCards={
+var loadingCards = {
 
-    backstage:{
-        card: function(){
+    backstage: {
+        card: function () {
             return $(".loadingCardBackstage")
         },
-        button: function(){
+        button: function () {
             return $(".loadingButtonBackstage")
         },
-        display:function(increment){
+        display: function (increment) {
             $(".loadingCardBackstage").removeClass("d-none");
-            loadingAnimation(loadingCards.backstage.card(),$(".backstageProgress"),increment,"backstage")
+            loadingAnimation(loadingCards.backstage.card(), $(".backstageProgress"), increment, "backstage")
         },
-        showButton:function(){
+        showButton: function () {
             $(".backstageBar").addClass("d-none");
             $(".loadingButtonBackstage").removeClass("d-none");
             $("#loadingTextBackstage").text("Backstage Loaded!");
             $("#loadingTextBackstage").addClass("text-center");
         },
-        hide:function(){
+        hide: function () {
             $(".loadingCardBackstage").addClass("d-none");
         },
-        
+
     },
-    playbill:{
-        card: function(){
+    playbill: {
+        card: function () {
             return $(".loadingCardPlaybill")
         },
-        button: function(){
+        button: function () {
             return $(".loadingButtonPlaybill")
         },
-        display:function(increment){
+        display: function (increment) {
             $(".loadingCardPlaybill").removeClass("d-none");
-            loadingAnimation(loadingCards.playbill.card(),$(".playbillProgress"),increment,"playbill")
+            loadingAnimation(loadingCards.playbill.card(), $(".playbillProgress"), increment, "playbill")
         },
-        showButton:function(){
+        showButton: function () {
             $(".playbillBar").addClass("d-none")
             $(".loadingButtonPlaybill").removeClass("d-none");
             $("#loadingTextPlaybill").text("Playbill Loaded!")
             $("#loadingTextPlaybill").addClass("text-center")
         },
-        hide:function(){
+        hide: function () {
             $(".loadingCardPlaybill").addClass("d-none");
         },
     }
 };
 
-function loadingAnimation(loadingCard,progressBar,increment,source){
+function loadingAnimation(loadingCard, progressBar, increment, source) {
 
-    if(allAuditions[source].length==0){
+    if (allAuditions[source].length == 0) {
         progressBar.attr({
-            "aria-valuenow" :increment,
+            "aria-valuenow": increment,
         });
         progressBar.css({
-            "width" : increment+"%",
+            "width": increment + "%",
         });
     }
 
-  };
+};
 
-$(function(){
+$(function () {
 
 
-    $(".loadingButtonPlaybill").on("click",function(){
+    $(".loadingButtonPlaybill").on("click", function () {
         allAuditions.createList(allAuditions.playbill)
         allAuditions.display()
         $(this).parent().hide()
     });
-    $(".loadingButtonBackstage").on("click",function(){
+    $(".loadingButtonBackstage").on("click", function () {
         allAuditions.createList(allAuditions.backstage)
         allAuditions.display()
         $(this).parent().hide()
     });
+
 
 });

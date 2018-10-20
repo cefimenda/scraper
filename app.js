@@ -1,82 +1,44 @@
+const express = require("express");
+const app = express();
+const db = require("./models");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose")
 
-var express = require("express");
-var app = express();
-
-var port = process.env.PORT || 8080;
-
-
-// var playbill = require("./playbill.js")
-// var backstage = require("./backstage.js")
+var PORT = process.env.PORT || 8080;
 
 app.use(express.static('home'))
 
-var auditions = require( './node_auditions' );
-var scrapePlaybill = require('./node_scrapePlaybill')
-var scrapeBackstage = require('./node_scrapeBackstage')
+// Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static("public"));
 
-app.get("/playbill",(req,res)=> {
-    console.log("received playbill request")
-    console.log('gettingPlaybill is'+String(auditions.gettingPlaybill))
-    if (auditions.gettingPlaybill === false){
-        scrapePlaybill.scrape()
-        result={
-            value : auditions.playbillProgress
-        }
-        res.send(JSON.stringify(result));
-        res.end();
-    }
-    else{
-        if(auditions.playbillProgress === 100){
-            console.log('sending auditions')
-            res.send(JSON.stringify(auditions.playbill));
-            auditions.gettingPlaybill=false
-            auditions.playbillProgress=0;
-        }else{
-            console.log('sending result object')
-            result={
-                value : auditions.playbillProgress
-            }
-            console.log(result)
-            res.send(JSON.stringify(result))
-        }
-        console.log('ending this request')
-        console.log("____________________")
-        res.end();
-    }
-}); 
-app.get("/backstage",(req,res)=> {
-    console.log("received backstage request")
-    console.log('gettingBackstage is'+String(auditions.gettingBackstage))
-    if (auditions.gettingBackstage === false){
-        scrapeBackstage.scrape()
-        result={
-            value : auditions.backstageProgress
-        }
-        res.send(JSON.stringify(result));
-        res.end();
-    }
-    else{
-        if(auditions.backstageProgress === 100){
-            console.log('sending auditions')
-            res.send(JSON.stringify(auditions.backstage));
-            auditions.gettingBackstage=false
-            auditions.backstageProgress=0;
-        }else{
-            console.log('sending result object')
-            result={
-                value : auditions.backstageProgress
-            }
-            console.log(result)
-            res.send(JSON.stringify(result))
-        }
-        console.log('ending this request')
-        console.log("____________________")
-        res.end();
-    }
-}); 
-app.listen(port, () => console.log('listening on port' + port))
-
-// app.listen("/scrape",() => console.log('Listening for scrape request'))
+// Connect to the Mongo DB
+var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/scavenger';
+mongoose.connect(uristring, { useNewUrlParser: true });
 
 
+// Routes
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
+var syncOptions = { force: false };
+
+// If running a test, set syncOptions.force to true
+// clearing the `testdb`
+if (process.env.NODE_ENV === "test") {
+    // syncOptions.force = true;
+}
+
+// Starting the server, syncing our models ------------------------------------/
+db.sequelize.sync(syncOptions).then(function () {
+    app.listen(PORT, function () {
+        console.log(
+            "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
+            PORT,
+            PORT
+        );
+    });
+});
+
+module.exports = app;

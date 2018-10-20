@@ -53,7 +53,7 @@ function displayCard(audition) {
   var cardRow = $("<div>").addClass("row shadow rounded my-2");
   container.append(cardRow);
 
-  var cardCol = $("<div>").addClass("col-12 card py-3");
+  var cardCol = $("<div>").addClass("col-12 card auditionCard py-3");
   cardRow.append(cardCol);
 
   var topRow = $("<div>").addClass("row");
@@ -94,8 +94,10 @@ function displayCard(audition) {
   titleDiv.html("<h4><a href ='" + audition.link + "' target='_blank'>" + audition.title + "</a></h4>");
   titleRow.append(titleDiv);
 
-  var placeholderDiv = $("<div>").addClass("col-2 mb-3");
+  var placeholderDiv = $("<div>").addClass("col-2 mb-3 commentSection text-right");
   titleRow.append(placeholderDiv);
+  placeholderDiv.append("<i class='far fa-comments mt-3'></i>")
+  placeholderDiv.attr('data',JSON.stringify(audition))
 
   var locationRow = $("<div>").addClass("row");
   cardCol.append(locationRow);

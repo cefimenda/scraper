@@ -1,20 +1,25 @@
 var auditions = require('./node_auditions');
 var puppeteer = require('puppeteer');
-var Table = require('./database.js');
-var auditionsDB = new Table("auditions")
+const db = require("./models")
+const auditionsDB = db.audition
 var recentlyScraped;
 
 let scrape = async () => {
     auditions.gettingBackstage = true;
     var foundMostRecent = false;
     var tester;
-    auditionsDB.connect()
-    auditionsDB.getMostRecent(1, "Backstage").then(function (result) {
+    auditionsDB.findAll({
+        limit: 1, where: {
+            source: "Backstage",
+
+        }, order: [["createdAt", "DESC"]]
+    }).then(function (result) {
         recentlyScraped = result[0]
         console.log("LOGGING")
         console.log(recentlyScraped)
         console.log("^ THIS WAS SCRAPED RECENTLY ^")
     })
+
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'], headless: true }); //opens browser - headless false --> displays action on screen
 
     console.log("scrape begins")
@@ -33,9 +38,18 @@ let scrape = async () => {
         const result = await page.evaluate((recentlyScraped) => {
             var auditionList = [];
             var duplicate;
+            //backstage has jquery so we can use jquery while evaluating the page.
+            var auditionCard = $(".casting__listing")
 
             //get data from 12 audition items on page - sponsored/featured ones might get ignored
-            for (var i = 0; i < 15; i++) {
+            for (let i = 1; i < auditionCard.length; i++) {
+                //check if it is sponsored
+                var elem = document.querySelector("#main__container > div > div > div:nth-child(3) > div > div:nth-child("+i+")")
+                console.log(elem.className.includes("sponsored"))
+                if (elem.className.includes("sponsored")) {
+
+                    continue
+                }
 
                 //Get Title
                 var titleElem = document.querySelector("#main__container > div > div > div:nth-child(3) > div > div:nth-child(" + i + ") > div.col-lg-9.col-md-9.col-sm-12.casting__listing--prod > h3 > a");
@@ -142,9 +156,10 @@ let scrape = async () => {
                 var audition = { title, organization, state, tags, isUnion, compensation, date, link, source: "Backstage" };
                 auditionList.push(audition);
             }
-            return [auditionList,duplicate];
+            return [auditionList, duplicate];
         }, recentlyScraped);
-        console.log(result.length)
+        console.log("RESULTING")
+        console.log(result)
         if (result[1]) {
             foundMostRecent = true
             tester = "FOUND IT"
@@ -160,12 +175,11 @@ let scrape = async () => {
 
     browser.close();     //close browser
     console.log(auditionList)
-    auditionsDB.newGroup(auditionList).then(function (success) {
+    auditionsDB.bulkCreate(auditionList).then(function (success) {
         console.log(success)
-        auditionsDB.getItem("source", "Backstage", 500).then(function (auditionItems) {
+        auditionsDB.findAll({ where: { source: "Backstage" }, limit: 500 }).then(function (auditionItems) {
             auditions.backstage = auditionItems
             auditions.backstageProgress = 100
-            auditionsDB.connection.end()
         })
     })
 };

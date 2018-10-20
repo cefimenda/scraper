@@ -5,7 +5,7 @@ var allAuditions = {
     playbillLoaded : false,
     getPlaybill:function(){
       var xhr = new XMLHttpRequest();
-      xhr.open('GET','/playbill',true)
+      xhr.open('GET','/api/playbill',true)
       xhr.send(null)
       xhr.onload = function(){
         if(xhr.status == 200){
@@ -35,7 +35,7 @@ var allAuditions = {
     backstageLoaded:false,
     getBackstage:function(){
       var xhr = new XMLHttpRequest();
-      xhr.open('GET','/backstage',true)
+      xhr.open('GET','/api/backstage',true)
       xhr.send(null)
       xhr.onload = function(){
         if(xhr.status == 200){

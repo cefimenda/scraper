@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,29 +12,40 @@
         filteredList['isEmpty'] = true
         let andFilter = {}
         andFilter['isEmpty'] = false
-    </script>          
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src = "UIObjects.js" type = "text/javascript"></script>
-    <script src = "auditions.js" type = "text/javascript"></script>
-    <script src = "functions.js" type = "text/javascript"></script>
-    <script src = "filters.js" type = "text/javascript"> </script>
-    <link rel = "stylesheet" type = "text/css" href = "style.css">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+        crossorigin="anonymous">
+
+
+
+    <script src="UIObjects.js" type="text/javascript"></script>
+    <script src="auditions.js" type="text/javascript"></script>
+    <script src="functions.js" type="text/javascript"></script>
+    <script src="filters.js" type="text/javascript"> </script>
+    <script src="lightbox.js" type="text/javascript"> </script>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
+
 <body>
     <!-- NavBar -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-primary text-light">
         <a class="navbar-brand text-light" href="#">Scavenger</a>
         <span class="navbar-text ml-auto text-light">
-            <p class = "auditionCount"></p>
+            <p class="auditionCount"></p>
         </span>
     </nav>
     <nav class="navbar placeholder navbar-expand-lg">
         <a class="navbar-brand  text-light" href="#">Scavenger</a>
     </nav>
-    
+
     <br>
     <div class="container m-2">
         <!-- loading box -->
@@ -52,17 +64,20 @@
                     </div>
                     <div class="form-check-container">
                         <div class="form-group form-check col-12 checkboxes">
-                            <div class="form-group d-inline sourceChecks"id="sourceChecks">
-                                <input type="checkbox" class="form-check-input" id="playbillBox" name="sourceCheck" checked>
+                            <div class="form-group d-inline sourceChecks" id="sourceChecks">
+                                <input type="checkbox" class="form-check-input" id="playbillBox" name="sourceCheck"
+                                    checked>
                                 <label class="sourceCheck form-check-label mr-5" id="playbillBoxLabel1" for="playbillBox">Playbill</label>
-                                <input type="checkbox" class="form-check-input ml-4" id="backstageBox" name="sourceCheck" checked>
+                                <input type="checkbox" class="form-check-input ml-4" id="backstageBox" name="sourceCheck"
+                                    checked>
                                 <label class="source Check form-check-label ml-5" id="backstageBoxLabel2" for="backstageBox">Backstage</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group mb-2">
                         <label for="titleFilterInput">Title:</label>
-                        <input type="text" class="form-control p-1" id="titleFilterInput" aria-describedby="Audition Title" placeholder="Enter Title">
+                        <input type="text" class="form-control p-1" id="titleFilterInput" aria-describedby="Audition Title"
+                            placeholder="Enter Title">
                     </div>
                     <div class="form-group mt-2">
                         <label for="categoryFilterInput">Category:</label>
@@ -88,24 +103,26 @@
                             </div>
                         </div>
                         <div class="form-group form-check col-sm-6 checkboxes">
-                                <label for="categoryFilterInput">Backstage:</label>
-                                <div class="form-group">
-                                    <input type="checkbox" class="form-check-input" id="musicalBox" name="catCheckBackstage">
-                                    <label class="categoryCheck form-check-label" id="musicalBoxLabel1" for="musicalBox">Musicals</label>
-                                </div>
-                                <div class="form-group">
-                                    <input type="checkbox" class="form-check-input" id="playBox" name="catCheckBackstage">
-                                    <label class="categoryCheck form-check-label" id="playBoxLabel2" for="playBox">Plays</label>
-                                </div>
-                                <div class="form-group">
-                                    <input type="checkbox" class="form-check-input" id="shortFilmBox" name="catCheckBackstage">
-                                    <label class="categoryCheck form-check-label" id="shortFilmBoxLabel3" for="shortFilmBox">Short films</label>
-                                </div>
-                                <div class="form-group">
-                                    <input type="checkbox" class="form-check-input" id="dancerBox" name="catCheckBackstage">
-                                    <label class="categoryCheck form-check-label" id="dancerBoxLabel4" for="dancerBox">Dancers & choreographers</label>
-                                </div>
+                            <label for="categoryFilterInput">Backstage:</label>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="musicalBox" name="catCheckBackstage">
+                                <label class="categoryCheck form-check-label" id="musicalBoxLabel1" for="musicalBox">Musicals</label>
                             </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="playBox" name="catCheckBackstage">
+                                <label class="categoryCheck form-check-label" id="playBoxLabel2" for="playBox">Plays</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="shortFilmBox" name="catCheckBackstage">
+                                <label class="categoryCheck form-check-label" id="shortFilmBoxLabel3" for="shortFilmBox">Short
+                                    films</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="dancerBox" name="catCheckBackstage">
+                                <label class="categoryCheck form-check-label" id="dancerBoxLabel4" for="dancerBox">Dancers
+                                    & choreographers</label>
+                            </div>
+                        </div>
                         <div class="form-group form-check col-sm-3 d-none checkboxes no-mini">
                             <div class="form-group">
                                 <input type="checkbox" class="form-check-input" id="checkbox5">
@@ -145,7 +162,8 @@
                         <div class="form-group form-check col-sm-3 d-none checkboxes no-mini">
                             <div class="form-group">
                                 <input type="checkbox" class="form-check-input" id="checkbox13">
-                                <label class="form-check-label" id="checkboxLabel13" for="checkbox13">Festival/Competition Submissions</label>
+                                <label class="form-check-label" id="checkboxLabel13" for="checkbox13">Festival/Competition
+                                    Submissions</label>
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" class="form-check-input" id="checkbox14">
@@ -153,12 +171,15 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn-sm btn-warning btn-block my-2" id="expandFilters">More Categories Coming Soon</button>
-                    <button type="button" class="btn-sm btn-warning btn-block my-2" id="minimize" style="display:none">Show Less</button>
+                    <button type="button" class="btn-sm btn-warning btn-block my-2" id="expandFilters">More Categories
+                        Coming Soon</button>
+                    <button type="button" class="btn-sm btn-warning btn-block my-2" id="minimize" style="display:none">Show
+                        Less</button>
 
                     <div class="form-group my-2">
                         <label for="stateFilterInput">State:</label>
-                        <input type="text" class="form-control p-1" id="stateFilterInput" aria-describedby="State" placeholder="Enter State (i.e. NY, CA etc.)">
+                        <input type="text" class="form-control p-1" id="stateFilterInput" aria-describedby="State"
+                            placeholder="Enter State (i.e. NY, CA etc.)">
                     </div>
                     <div class="form-group my-2">
                         <label for="isAuditionPaid">Paid/Not Paid:</label>
@@ -172,32 +193,74 @@
                     <!-- <button type="button" id = "displayFilteredTableButton" onclick="displayFilteredTable(filteredList)" class="btn btn-secondary btn-block">Display Table</button> -->
                 </form>
             </div>
-             <!-- auditions -->
-             <div class="col-12 col-lg-8 auditionsBody">
-                 <div class="row loadingRow">
+            <!-- auditions -->
+            <div class="col-12 col-lg-8 auditionsBody pr-5">
+                <div class="row loadingRow">
                     <div class="col-6 card shadow-lg loadingCardPlaybill d-none py-3 px-5 border-light bg-secondary text-light">
-                        <h5 id = "loadingTextPlaybill">Loading Playbill ...</h5>
+                        <h5 id="loadingTextPlaybill">Loading Playbill ...</h5>
                         <div class="progress playbillBar">
-                            <div class="progress-bar playbillProgress progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
+                            <div class="progress-bar playbillProgress progress-bar-striped progress-bar-animated" role="progressbar"
+                                aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
                         </div>
-                        <button class="loadingButtonPlaybill loadingButton d-none btn-outline-light mt-2">Display Results</button>
+                        <button class="loadingButtonPlaybill loadingButton d-none btn-outline-light mt-2">Display
+                            Results</button>
                     </div>
                     <div class="col-6 card shadow-lg loadingCardBackstage d-none py-3 px-5 border-light bg-secondary text-light">
-                        <h5 id = "loadingTextBackstage">Loading Backstage ...</h5>
+                        <h5 id="loadingTextBackstage">Loading Backstage ...</h5>
                         <div class="progress backstageBar">
-                            <div class="progress-bar backstageProgress progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
+                            <div class="progress-bar backstageProgress progress-bar-striped progress-bar-animated" role="progressbar"
+                                aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
                         </div>
-                        <button class="loadingButtonBackstage loadingButton d-none btn-outline-light mt-2">Display Results</button>
+                        <button class="loadingButtonBackstage loadingButton d-none btn-outline-light mt-2">Display
+                            Results</button>
                     </div>
                     <div class="col-sm-12 auditionsColumn">
 
                     </div>
-                 </div>
-                   
                 </div>
 
-
+            </div>
         </div>
     </div>
+    <div class="container">
+
+        <!-- Modal -->
+        <div class="modal right fade in" id="lightbox" tabindex="-1" role="dialog" aria-labelledby="lightbox">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="lightboxTitle"></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+
+                    <div class="modal-body" id="lightboxBody">
+                        <div class="row">
+                            <div class="col-12" id="commentDisplay">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-input">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Your Name</span>
+                            </div>
+                            <input class="form-control" aria-label="With input" id="commentName">
+                        </div>
+                        <div class="input-group">
+                            <textarea class="form-control" id="userComment" placeholder="Ask a question to the community!" aria-label="With textarea"></textarea>
+                        </div>
+                        <button class="w-100 btn-info" id="postComment">Post Comment</button>
+                    </div>
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+    </div><!-- container -->
+
 </body>
+
 </html>

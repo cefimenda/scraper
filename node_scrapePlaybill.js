@@ -1,15 +1,20 @@
 var puppeteer = require('puppeteer');
 var auditions = require('./node_auditions');
-var Table = require('./database.js');
-
-var auditionsDB = new Table("auditions")
+const db = require("./models")
+const auditionsDB = db.audition
 var recentlyScraped;
 
 let scrape = async () => {
-    auditionsDB.connect()
-    auditionsDB.getMostRecent(1, "Playbill").then(function (result) {
+    //Find the item on the database that was most recently added
+    auditionsDB.findAll({
+        limit: 1, where: {
+            source: "Playbill",
+
+        }, order: [["createdAt", "DESC"]]
+    }).then(function (result) {
         recentlyScraped = result[0]
-    })
+    });
+
     auditions.gettingPlaybill = true;
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'], headless: true }); //opens browser - headless false --> displays action on screen
 
@@ -81,7 +86,7 @@ let scrape = async () => {
             } else {
                 var link = "http://www.playbill.com" + linkElem.getAttribute("href")
             }
-            if (recentlyScraped){
+            if (recentlyScraped) {
                 if (recentlyScraped.link === link) {
                     console.log("ITEM NUMBER " + i + " IS A DUPLICATE")
                     break
@@ -100,18 +105,18 @@ let scrape = async () => {
 };
 
 function sendAuditionsToDB(auditions) {
-    auditionsDB.newGroup(auditions).then(function (result) {
-        console.log(result)//result is a success message or an error message
+    auditionsDB.bulkCreate(auditions).then(function (success) {
+        console.log(success)
         updateAuditionsObj()
+
+
     })
 }
 function updateAuditionsObj() {
-    auditionsDB.getItem("source", "Playbill", 500).then(function (auditionItems) {
+    auditionsDB.findAll({ where: { source: "Playbill" }, limit: 500 }).then(function (auditionItems) {
         auditions.playbill = auditionItems
-        auditionsDB.connection.end()
+        auditions.playbillProgress = 100;
     })
-    auditions.playbillProgress = 100;
-
 }
 module.exports = {
     scrape
