@@ -109,7 +109,7 @@ function sendAuditionsToDB(auditions) {
     })
 }
 function updateAuditionsObj() {
-    auditionsDB.findAll({ where: { source: "Playbill" }, limit: 500 }).then(function (auditionItems) {
+    auditionsDB.findAll({ where: { source: "Playbill" }, limit: 500, order: [["createdAt", "DESC"]] }).then(function (auditionItems) {
         auditions.playbill = auditionItems
         auditions.playbillProgress = 100;
     })

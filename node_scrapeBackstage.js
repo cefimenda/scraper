@@ -168,7 +168,7 @@ let scrape = async () => {
 
     browser.close();     //close browser
     auditionsDB.bulkCreate(auditionList).then(function (success) {
-        auditionsDB.findAll({ where: { source: "Backstage" }, limit: 500 }).then(function (auditionItems) {
+        auditionsDB.findAll({ where: { source: "Backstage" }, limit: 500 ,order: [["createdAt", "DESC"]]}).then(function (auditionItems) {
             auditions.backstage = auditionItems
             auditions.backstageProgress = 100
         })
