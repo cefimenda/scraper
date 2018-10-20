@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/scavenger';
+var uristring = process.env.MONGODB_URI || 'mongodb://localhost/scavenger';
 mongoose.connect(uristring, { useNewUrlParser: true });
 
 

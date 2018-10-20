@@ -45,7 +45,6 @@ let scrape = async () => {
             for (let i = 1; i < auditionCard.length; i++) {
                 //check if it is sponsored
                 var elem = document.querySelector("#main__container > div > div > div:nth-child(3) > div > div:nth-child("+i+")")
-                console.log(elem.className.includes("sponsored"))
                 if (elem.className.includes("sponsored")) {
 
                     continue
@@ -158,8 +157,7 @@ let scrape = async () => {
             }
             return [auditionList, duplicate];
         }, recentlyScraped);
-        console.log("RESULTING")
-        console.log(result)
+
         if (result[1]) {
             foundMostRecent = true
             tester = "FOUND IT"
@@ -174,7 +172,6 @@ let scrape = async () => {
     // await Promise.all(funcList); //--> to run all scraping simultaneously
 
     browser.close();     //close browser
-    console.log(auditionList)
     auditionsDB.bulkCreate(auditionList).then(function (success) {
         console.log(success)
         auditionsDB.findAll({ where: { source: "Backstage" }, limit: 500 }).then(function (auditionItems) {
