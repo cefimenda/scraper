@@ -9,7 +9,6 @@ let scrape = async () => {
     auditionsDB.findAll({
         limit: 1, where: {
             source: "Playbill",
-
         }, order: [["createdAt", "DESC"]]
     }).then(function (result) {
         recentlyScraped = result[0]
@@ -31,8 +30,6 @@ let scrape = async () => {
         await page.click('body > div.bsp-site-wrapper.listing.listing-event.bsp-onDomInsert-inserted-54.pb-trackevents-item > div.bsp-site.bsp-onDomInsert-inserted-59.pb-banner-item > div > div:nth-child(4) > div > div > div > div > div.bsp-component-content > div > div > div > button'); //click on anything with selector
     }
 
-    console.log(recentlyScraped)
-    console.log("^ THIS WAS RECENTLY SCRAPED ^")
     const result = await page.evaluate((recentlyScraped) => { //takes page and makes it accessible thru DOM
         let auditionList = [];
         var i = 1
@@ -106,7 +103,6 @@ let scrape = async () => {
 
 function sendAuditionsToDB(auditions) {
     auditionsDB.bulkCreate(auditions).then(function (success) {
-        console.log(success)
         updateAuditionsObj()
 
 

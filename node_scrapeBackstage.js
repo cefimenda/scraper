@@ -15,21 +15,17 @@ let scrape = async () => {
         }, order: [["createdAt", "DESC"]]
     }).then(function (result) {
         recentlyScraped = result[0]
-        console.log("LOGGING")
-        console.log(recentlyScraped)
-        console.log("^ THIS WAS SCRAPED RECENTLY ^")
+
     })
 
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'], headless: true }); //opens browser - headless false --> displays action on screen
 
-    console.log("scrape begins")
     var auditionList = [];
     const page = await browser.newPage(); //opens page  
 
     // Scrape
     for (var pageNum = 1; pageNum < 31; pageNum++) {
-        console.log(tester)
-        console.log(foundMostRecent)
+
         if (foundMostRecent) { break }
         page.setDefaultNavigationTimeout(60000)
         await page.goto('https://www.backstage.com/casting/?gender=B&max_age=100&min_age=0&page=' + pageNum + '&radius=50&sort_by=newest'); //goes to link
@@ -46,7 +42,6 @@ let scrape = async () => {
                 //check if it is sponsored
                 var elem = document.querySelector("#main__container > div > div > div:nth-child(3) > div > div:nth-child("+i+")")
                 if (elem.className.includes("sponsored")) {
-
                     continue
                 }
 
@@ -173,7 +168,6 @@ let scrape = async () => {
 
     browser.close();     //close browser
     auditionsDB.bulkCreate(auditionList).then(function (success) {
-        console.log(success)
         auditionsDB.findAll({ where: { source: "Backstage" }, limit: 500 }).then(function (auditionItems) {
             auditions.backstage = auditionItems
             auditions.backstageProgress = 100
