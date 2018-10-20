@@ -20,9 +20,9 @@ I have started building this project when I first started learning javascript an
 
 -Audition filtering is done on the client side, making filtering slow and taxing for the client side device.
 
-    --> Planning on restructuring api end points to get the filtering and heavy lifting done through db queries.
+  > Planning on restructuring api end points to get the filtering and heavy lifting done through db queries.
 
 -UI responsivity issue on XL screen sizes, causing the loading and audition cards to overlap with the fixed filterbar.
 
-    --> Looking into adding pagination so that the filters bar will no longer need to be fixed on the screen since height of auditions will not be larger than the height of the filterbar.
+  > Looking into adding pagination so that the filters bar will no longer need to be fixed on the screen since height of auditions will not be larger than the height of the filterbar.
 
