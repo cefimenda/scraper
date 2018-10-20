@@ -1,10 +1,12 @@
 # Scavenger
 
+### Information:
+
 Scavenger is a scraper built on Puppeteer that collects audition listings from the two most popular websites in the artist community - www.backstage.com, www.playbill.com
 
-I have started building this project when I first started learning javascript and over time implemented the new tools that I learned into it. 
+I have started building this project when I first started learning javascript and over time implemented the new tools that I learned into it. Hence on examination it is clear that there are conflicting styles or different methodologies used. (i.e. parts that use vanilla Ajax calls vs Jquery Ajax calls.)
 
-Currently it uses 
+### Currently tools utilized: 
 
 -A mysql database (with sequelize) to hold audition data, 
 
@@ -14,7 +16,7 @@ Currently it uses
 
 -An express server.
 
-Weaknesses and known issues:
+### Weaknesses and known issues:
 
 -Audition filtering is done on the client side, making filtering slow and taxing for the client side device.
 
@@ -23,4 +25,4 @@ Weaknesses and known issues:
 -UI responsivity issue on XL screen sizes, causing the loading and audition cards to overlap with the fixed filterbar.
 
     --> Looking into adding pagination so that the filters bar will no longer need to be fixed on the screen since height of auditions will not be larger than the height of the filterbar.
-    
+
