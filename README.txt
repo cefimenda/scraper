@@ -1,4 +1,4 @@
-#Scavenger#
+# Scavenger
 
 Scavenger is a scraper built on Puppeteer that collects audition listings from the two most popular websites in the artist community - www.backstage.com, www.playbill.com
 
